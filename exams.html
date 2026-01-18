@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>التقييمات والامتحانات | منصة تكنولوجيا التعليم</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      /* ستايل خاص بصفحة الامتحانات */
+      .exams-banner {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        border-right: 5px solid #10b981; /* لون التميز الأخضر للنجاح */
+        padding: 40px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        position: relative;
+      }
+      .exam-status-badge {
+        padding: 5px 12px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+      .status-new {
+        background: rgba(16, 185, 129, 0.2);
+        color: #10b981;
+      }
+
+      .exam-card {
+        transition: var(--transition);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .exam-card:hover {
+        transform: translateY(-5px);
+        border-color: #10b981;
+        box-shadow: 0 10px 20px rgba(16, 185, 129, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loader"></div>
+    </div>
+
+    <div class="app-container">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-icon"><i class="fas fa-user-check"></i></div>
+          <h2 style="font-size: 1.1rem">تكنولوجيا التعليم</h2>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-link"
+                ><i class="fas fa-th-large"></i><span>الرئيسية</span></a
+              >
+            </li>
+            <li>
+              <a href="index.html#subjects" class="nav-link"
+                ><i class="fas fa-book"></i><span>المواد الدراسية</span></a
+              >
+            </li>
+            <li>
+              <a href="library.html" class="nav-link"
+                ><i class="fas fa-folder-open"></i
+                ><span>المكتبة الرقمية</span></a
+              >
+            </li>
+            <li class="active">
+              <a href="exams.html" class="nav-link"
+                ><i class="fas fa-graduation-cap"></i><span>التقييمات</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="main-wrapper">
+        <header class="top-navbar">
+          <div class="header-left">
+            <button class="menu-btn" id="menuToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="examSearch"
+                placeholder="ابحث عن امتحان محدد..."
+              />
+            </div>
+          </div>
+          <div class="header-right">
+            <div
+              class="date-chip"
+              style="background: var(--accent-color); color: white"
+            >
+              <i class="fas fa-star"></i> <span>نظام التقييم الذكي</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="content-body">
+          <section class="exams-banner animate__animated animate__fadeIn">
+            <span class="exam-status-badge status-new">تحديثات 2026</span>
+            <h1>ساحة الاختبارات والتقييم</h1>
+            <p>
+              اختبر معلوماتك في مواد تكنولوجيا التعليم واستعد للامتحانات
+              النهائية
+            </p>
+          </section>
+
+          <div class="filter-section animate__animated animate__fadeInUp">
+            <button
+              class="filter-btn active"
+              onclick="filterExams('all', this)"
+            >
+              كل المواد
+            </button>
+            <button class="filter-btn" onclick="filterExams('tech_edu', this)">
+              تكنولوجيا التعليم
+            </button>
+            <button class="filter-btn" onclick="filterExams('cs_intro', this)">
+              علوم الحاسب
+            </button>
+            <button
+              class="filter-btn"
+              onclick="filterExams('digital_photo', this)"
+            >
+              التصوير الرقمي
+            </button>
+            <button
+              class="filter-btn"
+              onclick="filterExams('learning_res', this)"
+            >
+              مصادر التعلم
+            </button>
+            <button
+              class="filter-btn"
+              onclick="filterExams('comm_skills', this)"
+            >
+              مهارات التواصل
+            </button>
+            <button
+              class="filter-btn"
+              onclick="filterExams('edu_science', this)"
+            >
+              العلوم التربوية
+            </button>
+            <button
+              class="filter-btn"
+              onclick="filterExams('curriculum', this)"
+            >
+              المناهج
+            </button>
+            <button
+              class="filter-btn"
+              onclick="filterExams('social_issues', this)"
+            >
+              قضايا مجتمعية
+            </button>
+          </div>
+
+          <div id="examsGrid" class="quick-grid">
+            <div
+              class="loader-container"
+              style="grid-column: 1/-1; text-align: center; padding: 50px"
+            >
+              <div
+                class="loader"
+                style="margin: 0 auto; border-top-color: #10b981"
+              ></div>
+              <p style="margin-top: 15px; color: var(--text-muted)">
+                جاري تحضير نماذج الأسئلة...
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+      // 1. إعدادات Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyA4_aX-sRYpzZITrt0fF82ONoeb4d71GUA",
+        authDomain: "maath-library-2026.firebaseapp.com",
+        projectId: "maath-library-2026",
+        storageBucket: "maath-library-2026.firebasestorage.app",
+        messagingSenderId: "667101666048",
+        appId: "1:667101666048:web:220bcfef7157c9b369b1e5",
+      };
+
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      const db = firebase.firestore();
+
+      let allExams = []; // مخزن مؤقت للامتحانات لسرعة البحث
+
+      // 2. تشغيل جلب البيانات عند فتح الصفحة
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchExams();
+
+        // تفعيل البحث النصي في أسماء الامتحانات
+        document.getElementById("examSearch").addEventListener("input", (e) => {
+          const term = e.target.value.toLowerCase();
+          const filtered = allExams.filter((ex) =>
+            ex.name.toLowerCase().includes(term)
+          );
+          renderExams(filtered);
+        });
+      });
+
+      // 3. دالة جلب الامتحانات من Firebase
+      function fetchExams() {
+        // ملاحظة: هنفترض إننا بنرفع الامتحانات في الـ Admin كـ (Files) ولكن بنوع "exams"
+        // أو بنجيب كل الروابط اللي أنتي رفعتيها ونفلتر منها اللي اسمه فيه "امتحان"
+        db.collection("files").onSnapshot((snapshot) => {
+          allExams = [];
+          snapshot.forEach((doc) => {
+            const data = doc.data();
+            // فلترة العناصر اللي تعتبر امتحانات فقط (لو أنتي رفعتيها بنوع مخصص)
+            allExams.push({ id: doc.id, ...data });
+          });
+          renderExams(allExams);
+
+          // إخفاء التحميل
+          const loader = document.getElementById("loadingOverlay");
+          if (loader) loader.style.display = "none";
+        });
+      } // 4. دالة عرض كروت الامتحانات في الشبكة
+      function renderExams(exams) {
+        const grid = document.getElementById("examsGrid");
+        grid.innerHTML = "";
+
+        if (exams.length === 0) {
+          grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                        <i class="fas fa-clipboard-list" style="font-size: 3rem; color: var(--text-muted); opacity: 0.5;"></i>
+                        <p style="margin-top: 15px; color: var(--text-muted);">لا توجد امتحانات متاحة حالياً لهذا القسم.</p>
+                    </div>`;
+          return;
+        }
+
+        exams.forEach((exam) => {
+          // قاموس تحويل الأكواد لأسماء المواد
+          const subjectNames = {
+            tech_edu: "تكنولوجيا التعليم",
+            cs_intro: "علوم الحاسب",
+            digital_photo: "التصوير الرقمي",
+            learning_res: "مصادر التعلم",
+            comm_skills: "مهارات التواصل",
+            edu_science: "العلوم التربوية",
+            curriculum: "المناهج",
+            social_issues: "قضايا مجتمعية",
+          };
+
+          const card = document.createElement("div");
+          card.className =
+            "stat-card exam-card animate__animated animate__zoomIn";
+
+          card.innerHTML = `
+                    <div class="card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <div class="card-info">
+                        <span style="font-size: 0.7rem; color: #10b981; font-weight: bold; text-transform: uppercase;">اختبار إلكتروني</span>
+                        <h3 style="font-size: 1.1rem; margin: 5px 0;">${
+                          exam.name
+                        }</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                            المادة: ${subjectNames[exam.subject] || "عام"}
+                        </p>
+                        <a href="${
+                          exam.url
+                        }" target="_blank" class="btn-card" style="background: #10b981; border-color: #10b981; display: block; text-align: center;">
+                            ابدأ الاختبار الآن <i class="fas fa-chevron-left" style="margin-right: 5px; font-size: 0.8rem;"></i>
+                        </a>
+                    </div>
+                `;
+          grid.appendChild(card);
+        });
+      }
+
+      // 5. دالة التصفية (فلترة) حسب المادة
+      function filterExams(subjectCode, btn) {
+        // تحديث ستايل الأزرار
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        if (subjectCode === "all") {
+          renderExams(allExams);
+        } else {
+          const filtered = allExams.filter((ex) => ex.subject === subjectCode);
+          renderExams(filtered);
+        }
+      }
+
+      // 6. تفعيل القائمة الجانبية للموبايل
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+      if (menuToggle) {
+        menuToggle.addEventListener("click", () => {
+          sidebar.classList.toggle("active");
+        });
+      }
+    </script>
+  </body>
+</html>

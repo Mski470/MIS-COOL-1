@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الجدول الدراسي | منصة تكنولوجيا التعليم 2026</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      /* ستايل حصري لصفحة الجدول لضمان أعلى جودة بصرياً */
+      :root {
+        --sch-purple: #8b5cf6;
+        --sch-dark-purple: #4c1d95;
+        --sch-glass: rgba(30, 41, 59, 0.7);
+      }
+
+      body {
+        background-color: #0f172a;
+        color: #f8fafc;
+        font-family: "Tajawal", sans-serif;
+        margin: 0;
+      }
+
+      .schedule-wrapper {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* تنسيق كرت الجدول الكبير */
+      .schedule-card {
+        background: var(--sch-glass);
+        backdrop-filter: blur(10px);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      } /* ستايل الجدول الاحترافي */
+      .schedule-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 12px; /* مسافة بين الصفوف لشكل عصري */
+        margin-top: 20px;
+      }
+
+      .schedule-table th {
+        padding: 20px;
+        text-align: right;
+        color: var(--sch-purple);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.95rem;
+        border-bottom: 2px solid rgba(139, 92, 246, 0.3);
+      }
+
+      .schedule-table td {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.03);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* حواف دائرية لأول وأخر خلية في كل صف */
+      .schedule-table td:first-child {
+        border-radius: 0 15px 15px 0;
+      }
+      .schedule-table td:last-child {
+        border-radius: 15px 0 0 15px;
+      }
+
+      .schedule-table tr:hover td {
+        background: rgba(139, 92, 246, 0.1);
+        transform: scale(1.01);
+        color: #fff;
+      }
+
+      /* الأوسمة الخاصة باليوم والحالة */
+      .day-badge {
+        background: linear-gradient(
+          45deg,
+          var(--sch-purple),
+          var(--sch-dark-purple)
+        );
+        color: white;
+        padding: 6px 15px;
+        border-radius: 10px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+      }
+
+      .time-cell {
+        direction: ltr;
+        font-family: "Courier New", monospace;
+        font-weight: bold;
+        color: #10b981;
+      } /* ستايلات الحالات (مباشر / مسجل / قادم) */
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+
+      /* حالة البث المباشر مع النبض */
+      .status-live {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      .status-live i {
+        animation: pulse-red 1.5s infinite;
+      }
+
+      /* حالة المحاضرة المسجلة */
+      .status-recorded {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+      }
+
+      /* تعريف حركة النبض */
+      @keyframes pulse-red {
+        0% {
+          transform: scale(0.9);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0.9);
+          opacity: 0.7;
+        }
+      }
+
+      /* تحسينات الموبايل لعدم حدوث أخطاء في العرض */
+      @media (max-width: 992px) {
+        .schedule-table thead {
+          display: none;
+        } /* إخفاء الرأس في الموبايل */
+        .schedule-table td {
+          display: block;
+          text-align: left;
+          padding-left: 50%;
+          position: relative;
+          border-radius: 0 !important;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .schedule-table td::before {
+          content: attr(data-label);
+          position: absolute;
+          right: 20px;
+          font-weight: bold;
+          color: var(--sch-purple);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon" style="background: var(--sch-purple); box-shadow: 0 0 20px var(--sch-purple);">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h2>جدول 2026</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                    <li><a href="library.html" class="nav-link"><i class="fas fa-book-open"></i><span>المكتبة</span></a></li>
+                    <li class="active"><a href="schedule.html" class="nav-link"><i class="fas fa-clock"></i><span>الجدول</span></a></li>
+                    <li><a href="video-gallery.html" class="nav-link"><i class="fas fa-video"></i><span>المحاضرات</span></a></li>
+                    <li><a href="exams.html" class="nav-link"><i class="fas fa-pen-nib"></i><span>الامتحانات</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <button class="toggle-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+                <div class="user-profile">
+                    <span>أهلاً بكِ في جدولكِ الدراسي</span>
+                    <div class="avatar"><i class="fas fa-user-graduate"></i></div>
+                </div>
+            </header>
+
+            <div class="page-body">
+                <div class="schedule-wrapper">
+                    <div class="section-title animate__animated animate__fadeInDown">
+                        <h1 style="color: var(--sch-purple); font-size: 2.2rem; margin-bottom: 10px;">
+                            <i class="fas fa-calendar-check"></i> تنظيم الوقت الدراسي
+                        </h1>
+                        <p style="color: #94a3b8;">هنا تجدين مواعيد محاضراتكِ المباشرة والمسجلة بكل دقة.</p>
+                    </div>
+
+                    <div class="schedule-card animate__animated animate__fadeInUp">
+                        <table class="schedule-table">
+                            <thead>
+                                <tr>
+                                    <th>اليوم</th>
+                                    <th>المادة الدراسية</th>
+                                    <th>الوقت (توقيت القاهرة)</th>
+                                    <th>نوع المحاضرة</th>
+                                    <th>رابط الحضور</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scheduleTableBody">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+      // 1. مصفوفة البيانات: هنا تقدري تعدلي المواعيد والمواد بسهولة
+      const mySchedule = [
+        {
+          day: "الأحد",
+          subject: "تكنولوجيا التعليم",
+          time: "10:00 AM",
+          type: "live",
+          link: "#",
+        },
+        {
+          day: "الأحد",
+          subject: "علوم الحاسب",
+          time: "01:00 PM",
+          type: "recorded",
+          link: "#",
+        },
+        {
+          day: "الأثنين",
+          subject: "التصوير الرقمي",
+          time: "09:00 AM",
+          type: "live",
+          link: "#",
+        },
+        {
+          day: "الأثنين",
+          subject: "مصادر التعلم",
+          time: "12:00 PM",
+          type: "live",
+          link: "#",
+        },
+        {
+          day: "الثلاثاء",
+          subject: "مهارات التواصل",
+          time: "11:00 AM",
+          type: "recorded",
+          link: "#",
+        },
+        {
+          day: "الثلاثاء",
+          subject: "العلوم التربوية",
+          time: "02:00 PM",
+          type: "live",
+          link: "#",
+        },
+        {
+          day: "الأربعاء",
+          subject: "المناهج وتنظيمها",
+          time: "10:00 AM",
+          type: "live",
+          link: "#",
+        },
+        {
+          day: "الأربعاء",
+          subject: "قضايا مجتمعية",
+          time: "01:00 PM",
+          type: "recorded",
+          link: "#",
+        },
+      ];
+
+      // 2. دالة عرض الجدول في الصفحة
+      function renderMySchedule() {
+        const tableBody = document.getElementById("scheduleTableBody");
+        if (!tableBody) return; // حماية من الإيرور في حال عدم وجود العنصر
+
+        tableBody.innerHTML = ""; // تنظيف الجدول قبل الملء
+
+        mySchedule.forEach((item) => {
+          // تحديد شكل "الوسم" بناءً على النوع
+          const isLive = item.type === "live";
+          const statusHTML = isLive
+            ? `<span class="status-badge status-live"><i class="fas fa-broadcast-tower"></i> مباشر الآن</span>`
+            : `<span class="status-badge status-recorded"><i class="fas fa-play-circle"></i> محاضرة مسجلة</span>`;
+
+          const row = `
+                    <tr>
+                        <td data-label="اليوم"><span class="day-badge">${item.day}</span></td>
+                        <td data-label="المادة">${item.subject}</td>
+                        <td data-label="الوقت" class="time-cell">${item.time}</td>
+                        <td data-label="الحالة">${statusHTML}</td>
+                        <td data-label="الرابط">
+                            <a href="${item.link}" class="nav-link" style="color:var(--sch-purple); font-weight:bold;">
+                                <i class="fas fa-external-link-alt"></i> دخول
+                            </a>
+                        </td>
+                    </tr>
+                `;
+          tableBody.innerHTML += row;
+        });
+      } // 3. تفعيل القائمة الجانبية للموبايل (Sidebar Toggle)
+      document.addEventListener("DOMContentLoaded", () => {
+        const menuBtn = document.getElementById("menuBtn");
+        const sidebar = document.getElementById("sidebar");
+        const mainContent = document.querySelector(".main-content");
+
+        if (menuBtn && sidebar) {
+          menuBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            sidebar.classList.toggle("active");
+          });
+
+          // إغلاق القائمة عند الضغط في أي مكان خارجها (للموبايل)
+          document.addEventListener("click", (e) => {
+            if (
+              sidebar.classList.contains("active") &&
+              !sidebar.contains(e.target) &&
+              e.target !== menuBtn
+            ) {
+              sidebar.classList.remove("active");
+            }
+          });
+        }
+
+        // 4. تشغيل بناء الجدول فوراً
+        renderMySchedule();
+      });
+    </script>
+
+    <style>
+      @media (max-width: 992px) {
+        .sidebar {
+          position: fixed;
+          right: -280px; /* مخفي جهة اليمين */
+          transition: all 0.4s ease;
+          z-index: 1000;
+        }
+        .sidebar.active {
+          right: 0; /* يظهر عند الضغط */
+        }
+        .main-content {
+          margin-right: 0 !important;
+          width: 100% !important;
+        }
+      }
+
+      /* تحسين شكل السكرول بار (Scrollbar) */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--sch-purple);
+        border-radius: 10px;
+      }
+    </style>
+  </body>
+</html>

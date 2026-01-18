@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>منصة دفعة 2026 | التعليمية الذكية</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loader"></div>
+      <h3 style="margin-top: 20px; color: white">جاري تجهيز المنصة...</h3>
+    </div>
+
+    <div class="app-container">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+          <h2>منصة 2026</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li class="active">
+              <a href="index.html" class="nav-link">
+                <i class="fas fa-home"></i><span>الرئيسية</span>
+              </a>
+            </li>
+            <li class="has-submenu">
+              <a href="javascript:void(0)" class="nav-link" id="subjectsBtn">
+                <i class="fas fa-book-reader"></i><span>المواد الدراسية</span>
+                <i class="fas fa-chevron-down submenu-arrow"></i>
+              </a>
+              <ul class="submenu" id="subjectsMenu">
+                <li>
+                  <a href="subject.html?sub=tech_edu">تكنولوجيا التعليم</a>
+                </li>
+                <li><a href="subject.html?sub=cs_intro">علوم الحاسب</a></li>
+                <li>
+                  <a href="subject.html?sub=digital_photo">التصوير الرقمي</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=learning_res">مصادر التعلم</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=comm_skills">مهارات التواصل</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=edu_science">العلوم التربوية</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=curriculum">المناهج وتنظيمها</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=social_issues">قضايا مجتمعية</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="schedule.html" class="nav-link">
+                <i class="fas fa-calendar-alt"></i><span>جدول المحاضرات</span>
+              </a>
+            </li>
+            <li>
+              <a href="library.html" class="nav-link">
+                <i class="fas fa-file-archive"></i><span>بنك الملفات</span>
+              </a>
+            </li>
+            <li>
+              <a href="video-gallery.html" class="nav-link">
+                <i class="fas fa-video"></i><span>معرض الفيديوهات</span>
+              </a>
+            </li>
+            <li>
+              <a href="exams.html" class="nav-link">
+                <i class="fas fa-pen-nib"></i><span>نماذج الامتحانات</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+          <p>الإصدار التعليمي 2.0</p>
+        </div>
+      </aside>
+
+      <main class="main-wrapper">
+        <header class="top-navbar">
+          <div class="header-left">
+            <button class="menu-btn" id="menuToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="ابحث عن ملزمة، فيديو، أو امتحان..."
+              />
+            </div>
+          </div>
+          <div class="header-right">
+            <div class="date-chip">
+              <i class="far fa-calendar-alt"></i>
+              <span id="currentDate">-- / -- / ----</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="content-body">
+          <!-- قسم الترحيب -->
+          <div
+            class="welcome-section animate__animated animate__fadeIn"
+            style="
+              background: linear-gradient(135deg, #1e293b, #0f172a);
+              padding: 40px;
+              border-radius: 20px;
+              margin-bottom: 30px;
+              text-align: center;
+            "
+          >
+            <h1
+              style="
+                font-size: 2rem;
+                margin-bottom: 15px;
+                color: var(--primary-blue);
+              "
+            >
+              <i class="fas fa-hand-sparkles"></i> أهلاً بكِ في منصة التميز
+            </h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem">
+              كل المواد الدراسية والمحتوى التعليمي في مكان واحد
+            </p>
+          </div>
+
+          <!-- عنوان قسم المواد -->
+          <div style="margin-bottom: 25px">
+            <h2
+              style="
+                font-size: 1.5rem;
+                color: var(--primary-blue);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+              "
+            >
+              <i class="fas fa-layer-group"></i> المواد الدراسية المتاحة
+            </h2>
+            <p style="color: var(--text-muted); margin-top: 8px">
+              اضغطي على أي مادة لعرض جميع محتوياتها من ملفات وفيديوهات
+            </p>
+          </div>
+
+          <!-- شبكة المواد الدراسية -->
+          <section class="quick-grid" id="subjectsGrid">
+            <!-- تكنولوجيا التعليم -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              onclick="window.location.href='subject.html?sub=tech_edu'"
+              style="cursor: pointer"
+            >
+              <div
+                class="card-icon"
+                style="
+                  background: rgba(59, 130, 246, 0.1);
+                  color: var(--primary-blue);
+                "
+              >
+                <i class="fas fa-laptop-code"></i>
+              </div>
+              <div class="card-info">
+                <h3>تكنولوجيا التعليم</h3>
+                <p>أحدث المحاضرات والوسائط الرقمية</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- علوم الحاسب -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.1s; cursor: pointer"
+              onclick="window.location.href='subject.html?sub=cs_intro'"
+            >
+              <div
+                class="card-icon"
+                style="
+                  background: rgba(16, 185, 129, 0.1);
+                  color: var(--accent-color);
+                "
+              >
+                <i class="fas fa-microchip"></i>
+              </div>
+              <div class="card-info">
+                <h3>علوم الحاسب</h3>
+                <p>أساسيات البرمجة ونظم التشغيل</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- التصوير الرقمي -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.2s; cursor: pointer"
+              onclick="window.location.href='subject.html?sub=digital_photo'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(245, 158, 11, 0.1); color: #f59e0b"
+              >
+                <i class="fas fa-camera-retro"></i>
+              </div>
+              <div class="card-info">
+                <h3>التصوير الرقمي</h3>
+                <p>فنون التصوير والإخراج البصري</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- مصادر التعلم -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.3s; cursor: pointer"
+              onclick="window.location.href='subject.html?sub=learning_res'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6"
+              >
+                <i class="fas fa-book-reader"></i>
+              </div>
+              <div class="card-info">
+                <h3>مصادر التعلم</h3>
+                <p>المكتبات الرقمية والمراجع التعليمية</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- مهارات التواصل -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.4s; cursor: pointer"
+              onclick="window.location.href='subject.html?sub=comm_skills'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(236, 72, 153, 0.1); color: #ec4899"
+              >
+                <i class="fas fa-comments"></i>
+              </div>
+              <div class="card-info">
+                <h3>مهارات التواصل</h3>
+                <p>فنون الإلقاء والعرض التقديمي</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- العلوم التربوية -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.5s; cursor: pointer"
+              onclick="window.location.href='subject.html?sub=edu_science'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(34, 197, 94, 0.1); color: #22c55e"
+              >
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="card-info">
+                <h3>العلوم التربوية</h3>
+                <p>نظريات التعلم والتطوير التربوي</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- المناهج وتنظيمها -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.6s; cursor: pointer"
+              onclick="window.location.href='subject.html?sub=curriculum'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(251, 146, 60, 0.1); color: #fb923c"
+              >
+                <i class="fas fa-stream"></i>
+              </div>
+              <div class="card-info">
+                <h3>المناهج وتنظيمها</h3>
+                <p>تصميم وتطوير المناهج الدراسية</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- قضايا مجتمعية -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.7s; cursor: pointer"
+              onclick="window.location.href='subject.html?sub=social_issues'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(20, 184, 166, 0.1); color: #14b8a6"
+              >
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="card-info">
+                <h3>قضايا مجتمعية</h3>
+                <p>التعليم والمسؤولية الاجتماعية</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- الوصول السريع -->
+          <div style="margin-top: 50px">
+            <h2
+              style="
+                font-size: 1.5rem;
+                color: var(--primary-blue);
+                margin-bottom: 20px;
+              "
+            >
+              <i class="fas fa-bolt"></i> وصول سريع
+            </h2>
+          </div>
+
+          <div class="quick-grid">
+            <div class="stat-card animate__animated animate__zoomIn">
+              <div
+                class="card-icon"
+                style="background: rgba(59, 130, 246, 0.2); color: #3b82f6"
+              >
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div class="card-info">
+                <h3>جدول المحاضرات</h3>
+                <p>مواعيد الحصص والمجموعات</p>
+                <a href="schedule.html" class="btn-card">فتح الجدول</a>
+              </div>
+            </div>
+
+            <div
+              class="stat-card animate__animated animate__zoomIn"
+              style="--delay: 0.1s"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(245, 158, 11, 0.2); color: #f59e0b"
+              >
+                <i class="fas fa-file-signature"></i>
+              </div>
+              <div class="card-info">
+                <h3>بنك الامتحانات</h3>
+                <p>اختبر نفسك في جميع المواد</p>
+                <a href="exams.html" class="btn-card">ابدأ الآن</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- أحدث الإضافات -->
+          <section class="recent-updates" style="margin-top: 50px">
+            <div class="section-header">
+              <h2><i class="fas fa-clock"></i> أحدث ما تم رفعه</h2>
+              <a href="library.html" class="view-all">مشاهدة الكل</a>
+            </div>
+            <div class="updates-list" id="recentUploads">
+              <div
+                class="loader-container"
+                style="text-align: center; padding: 20px"
+              >
+                <div
+                  class="loader"
+                  style="
+                    width: 30px;
+                    height: 30px;
+                    border-width: 3px;
+                    margin: 0 auto;
+                  "
+                ></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer class="main-footer">
+          <div class="footer-content">
+            <div class="footer-logo">
+              <i class="fas fa-graduation-cap"></i>
+              <span>منصة 2026</span>
+            </div>
+            <p>منصة تعليمية متطورة تهدف لتوفير أفضل المصادر التعليمية لكم.</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-whatsapp"></i></a>
+              <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
+            <p class="copyright">إعداد: معاذ أحمد علي رياض © 2026</p>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
