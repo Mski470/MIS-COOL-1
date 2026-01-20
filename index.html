@@ -1,33 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>منصة دفعة 2026 | التعليمية الذكية</title>
+    <title>منصة التنظيمية | الذكية</title>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
+    <!-- Animate.css -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- شاشة التحميل -->
     <div class="loading-overlay" id="loadingOverlay">
       <div class="loader"></div>
-      <h3 style="margin-top: 20px; color: white">جاري تجهيز المنصة...</h3>
+      <h3 style="margin-top: 20px; color: white">جاري التحميل...</h3>
     </div>
 
+    <!-- الإعلان المنبثق -->
+    <div class="announcement-overlay" id="announcementOverlay">
+      <div class="announcement-card animate__animated">
+        <i class="fas fa-bullhorn main-icon pulse-icon"></i>
+        <h2 id="announcementTitle">ملاحظة هامة</h2>
+        <p id="announcementText">جاري تحميل آخر التنبيهات...</p>
+        <button class="close-announcement" id="closeAnnouncement">
+          فهمت ذلك <i class="fas fa-check-circle" style="margin-right: 8px"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- الحاوية الرئيسية -->
     <div class="app-container">
+      <!-- القائمة الجانبية -->
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
           <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
@@ -72,8 +94,14 @@
               </ul>
             </li>
             <li>
-              <a href="schedule.html" class="nav-link">
-                <i class="fas fa-calendar-alt"></i><span>جدول المحاضرات</span>
+              <a href="#notesSection" class="nav-link highlight-link">
+                <i class="fas fa-bullhorn"></i><span>أهم الملاحظات</span>
+                <span class="badge-new">جديد</span>
+              </a>
+            </li>
+            <li>
+              <a href="#scheduleSection" class="nav-link">
+                <i class="fas fa-calendar-alt"></i><span>جداول المحاضرات</span>
               </a>
             </li>
             <li>
@@ -95,11 +123,13 @@
         </nav>
 
         <div class="sidebar-footer">
-          <p>الإصدار التعليمي 2.0</p>
+          <p>الإصدار 2.0</p>
         </div>
       </aside>
 
+      <!-- المحتوى الرئيسي -->
       <main class="main-wrapper">
+        <!-- الشريط العلوي -->
         <header class="top-navbar">
           <div class="header-left">
             <button class="menu-btn" id="menuToggle">
@@ -122,6 +152,7 @@
           </div>
         </header>
 
+        <!-- محتوى الصفحة -->
         <div class="content-body">
           <!-- قسم الترحيب -->
           <div
@@ -141,14 +172,18 @@
                 color: var(--primary-blue);
               "
             >
-              <i class="fas fa-hand-sparkles"></i> أهلاً بكِ في منصة التميز
+              <i class="fas fa-hand-sparkles"></i> اهلا بكم في موقع تنظيمات
             </h1>
             <p style="color: var(--text-muted); font-size: 1.1rem">
-              كل المواد الدراسية والمحتوى التعليمي في مكان واحد
+              الهدف الاساسي لهذا الموقع هو تنظيم وادارة المحتوي التعليمي بشكل
+              سهل وسريع ومجاني تماما لتسهيل عملية التعلم الممتع لدى الزملاء
+              وتجميع كل ما يخص المواد الدراسية والملاحظات الهامة والاختبارات
+              التدريبية كلها في مكان واحد ليساعد في سرعة الوصول الي المحتوي
+              التعليمي
             </p>
           </div>
 
-          <!-- عنوان قسم المواد -->
+          <!-- المواد الدراسية -->
           <div style="margin-bottom: 25px">
             <h2
               style="
@@ -159,19 +194,18 @@
                 gap: 10px;
               "
             >
-              <i class="fas fa-layer-group"></i> المواد الدراسية المتاحة
+              <i class="fas fa-layer-group"></i> المواد الدراسية المقررة
             </h2>
             <p style="color: var(--text-muted); margin-top: 8px">
-              اضغطي على أي مادة لعرض جميع محتوياتها من ملفات وفيديوهات
+              بسم الله الرحمان الرحيم
             </p>
           </div>
 
-          <!-- شبكة المواد الدراسية -->
           <section class="quick-grid" id="subjectsGrid">
             <!-- تكنولوجيا التعليم -->
             <div
               class="stat-card animate__animated animate__fadeInUp"
-              onclick="window.location.href='subject.html?sub=tech_edu'"
+              onclick="window.location.href = 'subject.html?sub=tech_edu'"
               style="cursor: pointer"
             >
               <div
@@ -199,7 +233,7 @@
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.1s; cursor: pointer"
-              onclick="window.location.href='subject.html?sub=cs_intro'"
+              onclick="window.location.href = 'subject.html?sub=cs_intro'"
             >
               <div
                 class="card-icon"
@@ -226,7 +260,7 @@
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.2s; cursor: pointer"
-              onclick="window.location.href='subject.html?sub=digital_photo'"
+              onclick="window.location.href = 'subject.html?sub=digital_photo'"
             >
               <div
                 class="card-icon"
@@ -250,7 +284,7 @@
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.3s; cursor: pointer"
-              onclick="window.location.href='subject.html?sub=learning_res'"
+              onclick="window.location.href = 'subject.html?sub=learning_res'"
             >
               <div
                 class="card-icon"
@@ -274,7 +308,7 @@
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.4s; cursor: pointer"
-              onclick="window.location.href='subject.html?sub=comm_skills'"
+              onclick="window.location.href = 'subject.html?sub=comm_skills'"
             >
               <div
                 class="card-icon"
@@ -298,7 +332,7 @@
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.5s; cursor: pointer"
-              onclick="window.location.href='subject.html?sub=edu_science'"
+              onclick="window.location.href = 'subject.html?sub=edu_science'"
             >
               <div
                 class="card-icon"
@@ -322,7 +356,7 @@
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.6s; cursor: pointer"
-              onclick="window.location.href='subject.html?sub=curriculum'"
+              onclick="window.location.href = 'subject.html?sub=curriculum'"
             >
               <div
                 class="card-icon"
@@ -346,7 +380,7 @@
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.7s; cursor: pointer"
-              onclick="window.location.href='subject.html?sub=social_issues'"
+              onclick="window.location.href = 'subject.html?sub=social_issues'"
             >
               <div
                 class="card-icon"
@@ -397,7 +431,7 @@
 
             <div
               class="stat-card animate__animated animate__zoomIn"
-              style="--delay: 0.1s"
+              style="animation-delay: 0.1s"
             >
               <div
                 class="card-icon"
@@ -411,6 +445,83 @@
                 <a href="exams.html" class="btn-card">ابدأ الآن</a>
               </div>
             </div>
+          </div>
+
+          <!-- الملاحظات والجداول -->
+          <div
+            class="main-grid-container"
+            style="
+              display: grid;
+              grid-template-columns: 1fr;
+              gap: 40px;
+              margin-top: 50px;
+            "
+          >
+            <!-- أهم الملاحظات -->
+            <section
+              id="notesSection"
+              class="content-section animate__animated animate__fadeIn"
+            >
+              <div
+                class="section-header"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+                <i
+                  class="fas fa-bullhorn"
+                  style="color: var(--warning-yellow); font-size: 1.5rem"
+                ></i>
+                <h2 style="font-size: 1.6rem">أهم الملاحظات والتنبيهات</h2>
+              </div>
+              <div class="notes-container" id="notesContainer">
+                <p
+                  style="
+                    color: var(--text-muted);
+                    text-align: center;
+                    padding: 20px;
+                  "
+                >
+                  جاري جلب آخر الملاحظات...
+                </p>
+              </div>
+            </section>
+
+            <!-- الجداول الدراسية -->
+            <section
+              id="scheduleSection"
+              class="content-section animate__animated animate__fadeIn"
+            >
+              <div
+                class="section-header"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+                <i
+                  class="fas fa-calendar-alt"
+                  style="color: #8b5cf6; font-size: 1.5rem"
+                ></i>
+                <h2 style="font-size: 1.6rem">الجداول الدراسية المحدثة</h2>
+              </div>
+              <div class="schedules-grid" id="schedulesContainer">
+                <p
+                  style="
+                    color: var(--text-muted);
+                    text-align: center;
+                    padding: 20px;
+                  "
+                >
+                  جاري تحميل الجداول...
+                </p>
+              </div>
+            </section>
           </div>
 
           <!-- أحدث الإضافات -->
@@ -438,6 +549,7 @@
           </section>
         </div>
 
+        <!-- الفوتر -->
         <footer class="main-footer">
           <div class="footer-content">
             <div class="footer-logo">
@@ -456,8 +568,33 @@
       </main>
     </div>
 
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <!-- Custom Script -->
     <script src="script.js"></script>
+
+    <!-- Smooth Scroll Script -->
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            // إغلاق القائمة الجانبية في الموبايل بعد الضغط على الرابط
+            const sidebar = document.getElementById("sidebar");
+            if (sidebar && sidebar.classList.contains("active")) {
+              sidebar.classList.remove("active");
+            }
+          }
+        });
+      });
+    </script>
   </body>
 </html>
+h

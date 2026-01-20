@@ -1,24 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>المكتبة الرقمية | منصة تكنولوجيا التعليم</title>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
+    <!-- Animate.css -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css" />
 
     <style>
@@ -31,40 +38,17 @@
         text-align: center;
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
-      .filter-section {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        margin-bottom: 30px;
-        justify-content: center;
-        background: var(--card-bg);
-        padding: 20px;
-        border-radius: 20px;
-      }
-      .filter-btn {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--text-muted);
-        padding: 10px 20px;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: var(--transition);
-        font-size: 0.9rem;
-      }
-      .filter-btn.active,
-      .filter-btn:hover {
-        background: var(--primary-blue);
-        color: white;
-        border-color: var(--primary-blue);
-      }
     </style>
   </head>
   <body>
+    <!-- شاشة التحميل -->
     <div class="loading-overlay" id="loadingOverlay">
       <div class="loader"></div>
     </div>
 
+    <!-- الحاوية الرئيسية -->
     <div class="app-container">
+      <!-- القائمة الجانبية -->
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
           <div class="logo-icon"><i class="fas fa-book-open"></i></div>
@@ -96,7 +80,10 @@
           </ul>
         </nav>
       </aside>
+
+      <!-- المحتوى الرئيسي -->
       <main class="main-wrapper">
+        <!-- الشريط العلوي -->
         <header class="top-navbar">
           <div class="header-left">
             <button class="menu-btn" id="menuToggle">
@@ -113,12 +100,15 @@
           </div>
           <div class="header-right">
             <div class="date-chip">
-              <i class="fas fa-book-reader"></i> <span>مكتبة التميز</span>
+              <i class="fas fa-book-reader"></i>
+              <span>مكتبة التميز</span>
             </div>
           </div>
         </header>
 
+        <!-- محتوى الصفحة -->
         <div class="content-body">
+          <!-- قسم الترحيب -->
           <section class="library-hero animate__animated animate__fadeIn">
             <h1>المكتبة الرقمية الشاملة</h1>
             <p>
@@ -127,6 +117,7 @@
             </p>
           </section>
 
+          <!-- أزرار الفلترة -->
           <div class="filter-section animate__animated animate__fadeInUp">
             <button
               class="filter-btn active"
@@ -184,6 +175,7 @@
             </button>
           </div>
 
+          <!-- شبكة عرض الملفات -->
           <div id="libraryContent" class="quick-grid">
             <div
               class="loader-container"
@@ -198,15 +190,15 @@
         </div>
       </main>
     </div>
-    ``` **لاحظي يا فنانة:** الأزرار هنا واخدة نفس الـ `values` اللي في الـ Admin
-    بتاعك (زي `tech_edu`) عشان لما الطالب يدوس "تكنولوجيا التعليم" الجافاسكريبت
-    يفهم هو عايز إيه بالظبط. قوليلي **"كملي"** عشان أبعتلك الجزء الثالث اللي فيه
-    الربط مع Firebase وعملية البحث والفلترة.
+
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
     <script>
-      // 1. إعدادات Firebase
+      /* =========================================
+           إعدادات Firebase
+           ========================================= */
       const firebaseConfig = {
         apiKey: "AIzaSyA4_aX-sRYpzZITrt0fF82ONoeb4d71GUA",
         authDomain: "maath-library-2026.firebaseapp.com",
@@ -221,9 +213,24 @@
       }
       const db = firebase.firestore();
 
-      let allFiles = []; // مصفوفة لتخزين كل الملفات محلياً للبحث السريع
+      // مصفوفة لتخزين كل الملفات محلياً للبحث السريع
+      let allFiles = [];
 
-      // 2. تحميل كل الملفات عند فتح الصفحة
+      // قاموس أسماء المواد للعرض
+      const subjectNames = {
+        tech_edu: "تكنولوجيا التعليم",
+        cs_intro: "علوم الحاسب",
+        digital_photo: "التصوير الرقمي",
+        learning_res: "مصادر التعلم",
+        comm_skills: "مهارات التواصل",
+        edu_science: "العلوم التربوية",
+        curriculum: "المناهج",
+        social_issues: "قضايا مجتمعية",
+      };
+
+      /* =========================================
+           تحميل البيانات عند فتح الصفحة
+           ========================================= */
       document.addEventListener("DOMContentLoaded", () => {
         loadAllLibraryData();
 
@@ -232,8 +239,14 @@
           const term = e.target.value.toLowerCase();
           filterBySearch(term);
         });
+
+        // تفعيل القائمة الجانبية للموبايل
+        setupMobileMenu();
       });
 
+      /* =========================================
+           جلب الملفات من Firebase
+           ========================================= */
       function loadAllLibraryData() {
         const contentDiv = document.getElementById("libraryContent");
 
@@ -245,7 +258,7 @@
             snapshot.forEach((doc) => {
               allFiles.push({ id: doc.id, ...doc.data() });
             });
-            displayFiles(allFiles); // عرض الكل في البداية
+            displayFiles(allFiles);
 
             // إخفاء التحميل
             const loader = document.getElementById("loadingOverlay");
@@ -253,7 +266,9 @@
           });
       }
 
-      // 3. دالة العرض الأساسية
+      /* =========================================
+           عرض الملفات في الشبكة
+           ========================================= */
       function displayFiles(files) {
         const contentDiv = document.getElementById("libraryContent");
         contentDiv.innerHTML = "";
@@ -270,7 +285,37 @@
         files.forEach((file) => {
           renderLibraryCard(file, contentDiv);
         });
-      } // 4. دالة التصفية حسب المادة
+      }
+
+      /* =========================================
+           رسم كارت الملف
+           ========================================= */
+      function renderLibraryCard(file, container) {
+        const card = document.createElement("div");
+        card.className = "stat-card animate__animated animate__fadeInUp";
+
+        card.innerHTML = `
+                <div class="card-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <div class="card-info">
+                    <h3 style="font-size: 1rem; margin-bottom: 5px;">${file.name}</h3>
+                    <span style="font-size: 0.75rem; background: #1e293b; padding: 2px 8px; border-radius: 5px; color: var(--text-muted);">
+                        ${subjectNames[file.subject] || "عام"}
+                    </span>
+                    <div style="margin-top: 15px;">
+                        <a href="${file.url}" target="_blank" class="btn-card" style="display: block; text-align: center; text-decoration: none;">
+                            <i class="fas fa-download"></i> تحميل الملزمة
+                        </a>
+                    </div>
+                </div>
+            `;
+        container.appendChild(card);
+      }
+
+      /* =========================================
+           التصفية حسب المادة
+           ========================================= */
       function filterBySubject(subjectCode, btn) {
         // تحديث شكل الأزرار
         document
@@ -282,67 +327,34 @@
           displayFiles(allFiles);
         } else {
           const filtered = allFiles.filter(
-            (file) => file.subject === subjectCode
+            (file) => file.subject === subjectCode,
           );
           displayFiles(filtered);
         }
       }
 
-      // 5. دالة البحث النصي (تبحث في الأسماء فوراً)
+      /* =========================================
+           البحث النصي
+           ========================================= */
       function filterBySearch(term) {
         const filtered = allFiles.filter((file) =>
-          file.name.toLowerCase().includes(term)
+          file.name.toLowerCase().includes(term),
         );
         displayFiles(filtered);
       }
 
-      // 6. تصميم كارت الملف في المكتبة
-      function renderLibraryCard(file, container) {
-        const card = document.createElement("div");
-        card.className = "stat-card animate__animated animate__fadeInUp";
+      /* =========================================
+           تفعيل القائمة الجانبية للموبايل
+           ========================================= */
+      function setupMobileMenu() {
+        const menuToggle = document.getElementById("menuToggle");
+        const sidebar = document.getElementById("sidebar");
 
-        // قاموس أسماء المواد للعرض فقط
-        const subjectNames = {
-          tech_edu: "تكنولوجيا التعليم",
-          cs_intro: "علوم الحاسب",
-          digital_photo: "التصوير الرقمي",
-          learning_res: "مصادر التعلم",
-          comm_skills: "مهارات التواصل",
-          edu_science: "العلوم التربوية",
-          curriculum: "المناهج",
-          social_issues: "قضايا مجتمعية",
-        };
-
-        card.innerHTML = `
-                <div class="card-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
-                    <i class="fas fa-file-pdf"></i>
-                </div>
-                <div class="card-info">
-                    <h3 style="font-size: 1rem; margin-bottom: 5px;">${
-                      file.name
-                    }</h3>
-                    <span style="font-size: 0.75rem; background: #1e293b; padding: 2px 8px; border-radius: 5px; color: var(--text-muted);">
-                        ${subjectNames[file.subject] || "عام"}
-                    </span>
-                    <div style="margin-top: 15px;">
-                        <a href="${
-                          file.url
-                        }" target="_blank" class="btn-card" style="display: block; text-align: center; text-decoration: none;">
-                            <i class="fas fa-download"></i> تحميل الملزمة
-                        </a>
-                    </div>
-                </div>
-            `;
-        container.appendChild(card);
-      }
-
-      // 7. تفعيل القائمة الجانبية للموبايل
-      const menuToggle = document.getElementById("menuToggle");
-      const sidebar = document.getElementById("sidebar");
-      if (menuToggle) {
-        menuToggle.addEventListener("click", () => {
-          sidebar.classList.toggle("active");
-        });
+        if (menuToggle && sidebar) {
+          menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+          });
+        }
       }
     </script>
   </body>

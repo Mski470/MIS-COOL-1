@@ -1,36 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>التقييمات والامتحانات | منصة تكنولوجيا التعليم</title>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
+    <!-- Animate.css -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css" />
 
     <style>
       /* ستايل خاص بصفحة الامتحانات */
       .exams-banner {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-        border-right: 5px solid #10b981; /* لون التميز الأخضر للنجاح */
+        border-right: 5px solid #10b981;
         padding: 40px;
         border-radius: 20px;
         margin-bottom: 30px;
         position: relative;
       }
+
       .exam-status-badge {
         padding: 5px 12px;
         border-radius: 50px;
@@ -39,6 +47,7 @@
         display: inline-block;
         margin-bottom: 10px;
       }
+
       .status-new {
         background: rgba(16, 185, 129, 0.2);
         color: #10b981;
@@ -48,6 +57,7 @@
         transition: var(--transition);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
+
       .exam-card:hover {
         transform: translateY(-5px);
         border-color: #10b981;
@@ -56,11 +66,14 @@
     </style>
   </head>
   <body>
+    <!-- شاشة التحميل -->
     <div class="loading-overlay" id="loadingOverlay">
       <div class="loader"></div>
     </div>
 
+    <!-- الحاوية الرئيسية -->
     <div class="app-container">
+      <!-- القائمة الجانبية -->
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
           <div class="logo-icon"><i class="fas fa-user-check"></i></div>
@@ -92,7 +105,10 @@
           </ul>
         </nav>
       </aside>
+
+      <!-- المحتوى الرئيسي -->
       <main class="main-wrapper">
+        <!-- الشريط العلوي -->
         <header class="top-navbar">
           <div class="header-left">
             <button class="menu-btn" id="menuToggle">
@@ -112,12 +128,15 @@
               class="date-chip"
               style="background: var(--accent-color); color: white"
             >
-              <i class="fas fa-star"></i> <span>نظام التقييم الذكي</span>
+              <i class="fas fa-star"></i>
+              <span>نظام التقييم الذكي</span>
             </div>
           </div>
         </header>
 
+        <!-- محتوى الصفحة -->
         <div class="content-body">
+          <!-- البانر -->
           <section class="exams-banner animate__animated animate__fadeIn">
             <span class="exam-status-badge status-new">تحديثات 2026</span>
             <h1>ساحة الاختبارات والتقييم</h1>
@@ -127,6 +146,7 @@
             </p>
           </section>
 
+          <!-- أزرار الفلترة -->
           <div class="filter-section animate__animated animate__fadeInUp">
             <button
               class="filter-btn active"
@@ -178,6 +198,7 @@
             </button>
           </div>
 
+          <!-- شبكة الامتحانات -->
           <div id="examsGrid" class="quick-grid">
             <div
               class="loader-container"
@@ -195,11 +216,15 @@
         </div>
       </main>
     </div>
+
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
     <script>
-      // 1. إعدادات Firebase
+      /* =========================================
+           إعدادات Firebase
+           ========================================= */
       const firebaseConfig = {
         apiKey: "AIzaSyA4_aX-sRYpzZITrt0fF82ONoeb4d71GUA",
         authDomain: "maath-library-2026.firebaseapp.com",
@@ -214,9 +239,24 @@
       }
       const db = firebase.firestore();
 
-      let allExams = []; // مخزن مؤقت للامتحانات لسرعة البحث
+      // مخزن مؤقت للامتحانات لسرعة البحث
+      let allExams = [];
 
-      // 2. تشغيل جلب البيانات عند فتح الصفحة
+      // قاموس تحويل الأكواد لأسماء المواد
+      const subjectNames = {
+        tech_edu: "تكنولوجيا التعليم",
+        cs_intro: "علوم الحاسب",
+        digital_photo: "التصوير الرقمي",
+        learning_res: "مصادر التعلم",
+        comm_skills: "مهارات التواصل",
+        edu_science: "العلوم التربوية",
+        curriculum: "المناهج",
+        social_issues: "قضايا مجتمعية",
+      };
+
+      /* =========================================
+           تشغيل جلب البيانات عند فتح الصفحة
+           ========================================= */
       document.addEventListener("DOMContentLoaded", () => {
         fetchExams();
 
@@ -224,30 +264,38 @@
         document.getElementById("examSearch").addEventListener("input", (e) => {
           const term = e.target.value.toLowerCase();
           const filtered = allExams.filter((ex) =>
-            ex.name.toLowerCase().includes(term)
+            ex.name.toLowerCase().includes(term),
           );
           renderExams(filtered);
         });
+
+        // تفعيل القائمة الجانبية للموبايل
+        setupMobileMenu();
       });
 
-      // 3. دالة جلب الامتحانات من Firebase
+      /* =========================================
+           جلب الامتحانات من Firebase
+           ========================================= */
       function fetchExams() {
-        // ملاحظة: هنفترض إننا بنرفع الامتحانات في الـ Admin كـ (Files) ولكن بنوع "exams"
-        // أو بنجيب كل الروابط اللي أنتي رفعتيها ونفلتر منها اللي اسمه فيه "امتحان"
-        db.collection("files").onSnapshot((snapshot) => {
-          allExams = [];
-          snapshot.forEach((doc) => {
-            const data = doc.data();
-            // فلترة العناصر اللي تعتبر امتحانات فقط (لو أنتي رفعتيها بنوع مخصص)
-            allExams.push({ id: doc.id, ...data });
-          });
-          renderExams(allExams);
+        // نجيب كل الامتحانات (type === 'exams')
+        db.collection("files")
+          .where("type", "==", "exams")
+          .onSnapshot((snapshot) => {
+            allExams = [];
+            snapshot.forEach((doc) => {
+              allExams.push({ id: doc.id, ...doc.data() });
+            });
+            renderExams(allExams);
 
-          // إخفاء التحميل
-          const loader = document.getElementById("loadingOverlay");
-          if (loader) loader.style.display = "none";
-        });
-      } // 4. دالة عرض كروت الامتحانات في الشبكة
+            // إخفاء التحميل
+            const loader = document.getElementById("loadingOverlay");
+            if (loader) loader.style.display = "none";
+          });
+      }
+
+      /* =========================================
+           عرض كروت الامتحانات في الشبكة
+           ========================================= */
       function renderExams(exams) {
         const grid = document.getElementById("examsGrid");
         grid.innerHTML = "";
@@ -262,18 +310,6 @@
         }
 
         exams.forEach((exam) => {
-          // قاموس تحويل الأكواد لأسماء المواد
-          const subjectNames = {
-            tech_edu: "تكنولوجيا التعليم",
-            cs_intro: "علوم الحاسب",
-            digital_photo: "التصوير الرقمي",
-            learning_res: "مصادر التعلم",
-            comm_skills: "مهارات التواصل",
-            edu_science: "العلوم التربوية",
-            curriculum: "المناهج",
-            social_issues: "قضايا مجتمعية",
-          };
-
           const card = document.createElement("div");
           card.className =
             "stat-card exam-card animate__animated animate__zoomIn";
@@ -284,15 +320,11 @@
                     </div>
                     <div class="card-info">
                         <span style="font-size: 0.7rem; color: #10b981; font-weight: bold; text-transform: uppercase;">اختبار إلكتروني</span>
-                        <h3 style="font-size: 1.1rem; margin: 5px 0;">${
-                          exam.name
-                        }</h3>
+                        <h3 style="font-size: 1.1rem; margin: 5px 0;">${exam.name}</h3>
                         <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
                             المادة: ${subjectNames[exam.subject] || "عام"}
                         </p>
-                        <a href="${
-                          exam.url
-                        }" target="_blank" class="btn-card" style="background: #10b981; border-color: #10b981; display: block; text-align: center;">
+                        <a href="${exam.url}" target="_blank" class="btn-card" style="background: #10b981; border-color: #10b981; display: block; text-align: center;">
                             ابدأ الاختبار الآن <i class="fas fa-chevron-left" style="margin-right: 5px; font-size: 0.8rem;"></i>
                         </a>
                     </div>
@@ -301,7 +333,9 @@
         });
       }
 
-      // 5. دالة التصفية (فلترة) حسب المادة
+      /* =========================================
+           التصفية (فلترة) حسب المادة
+           ========================================= */
       function filterExams(subjectCode, btn) {
         // تحديث ستايل الأزرار
         document
@@ -317,13 +351,18 @@
         }
       }
 
-      // 6. تفعيل القائمة الجانبية للموبايل
-      const menuToggle = document.getElementById("menuToggle");
-      const sidebar = document.getElementById("sidebar");
-      if (menuToggle) {
-        menuToggle.addEventListener("click", () => {
-          sidebar.classList.toggle("active");
-        });
+      /* =========================================
+           تفعيل القائمة الجانبية للموبايل
+           ========================================= */
+      function setupMobileMenu() {
+        const menuToggle = document.getElementById("menuToggle");
+        const sidebar = document.getElementById("sidebar");
+
+        if (menuToggle && sidebar) {
+          menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+          });
+        }
       }
     </script>
   </body>

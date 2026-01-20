@@ -1,24 +1,31 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>معرض المحاضرات المرئية | منصة تكنولوجيا التعليم</title>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
+    <!-- Animate.css -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css" />
 
     <style>
@@ -31,6 +38,7 @@
         color: white;
         box-shadow: 0 15px 35px rgba(239, 68, 68, 0.2);
       }
+
       .video-card {
         background: var(--card-bg);
         border-radius: 20px;
@@ -38,10 +46,12 @@
         border: 1px solid rgba(255, 255, 255, 0.05);
         transition: var(--transition);
       }
+
       .video-card:hover {
         transform: translateY(-10px);
         border-color: #ef4444;
       }
+
       .video-thumbnail {
         width: 100%;
         height: 180px;
@@ -51,12 +61,14 @@
         justify-content: center;
         position: relative;
       }
+
       .play-overlay {
         position: absolute;
         font-size: 3rem;
         color: rgba(255, 255, 255, 0.8);
         transition: 0.3s;
       }
+
       .video-card:hover .play-overlay {
         color: #ef4444;
         transform: scale(1.2);
@@ -64,11 +76,14 @@
     </style>
   </head>
   <body>
+    <!-- شاشة التحميل -->
     <div class="loading-overlay" id="loadingOverlay">
       <div class="loader"></div>
     </div>
 
+    <!-- الحاوية الرئيسية -->
     <div class="app-container">
+      <!-- القائمة الجانبية -->
       <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
           <div class="logo-icon" style="background: #ef4444">
@@ -107,7 +122,10 @@
           </ul>
         </nav>
       </aside>
+
+      <!-- المحتوى الرئيسي -->
       <main class="main-wrapper">
+        <!-- الشريط العلوي -->
         <header class="top-navbar">
           <div class="header-left">
             <button class="menu-btn" id="menuToggle">
@@ -124,12 +142,15 @@
           </div>
           <div class="header-right">
             <div class="date-chip" style="background: #ef4444; color: white">
-              <i class="fas fa-tv"></i> <span>بث مباشر مسجل</span>
+              <i class="fas fa-tv"></i>
+              <span>بث مباشر مسجل</span>
             </div>
           </div>
         </header>
 
+        <!-- محتوى الصفحة -->
         <div class="content-body">
+          <!-- قسم البانر -->
           <section class="video-hero animate__animated animate__fadeIn">
             <h1>مركز المحاضرات المرئية</h1>
             <p>
@@ -138,6 +159,7 @@
             </p>
           </section>
 
+          <!-- أزرار الفلترة -->
           <div class="filter-section animate__animated animate__fadeInUp">
             <button
               class="filter-btn active"
@@ -189,6 +211,7 @@
             </button>
           </div>
 
+          <!-- شبكة عرض الفيديوهات -->
           <div
             id="videoGrid"
             class="quick-grid"
@@ -210,16 +233,15 @@
         </div>
       </main>
     </div>
-    ``` **نصيحة من أختك:** في الجزء ده، الـ `grid` متظبط عشان الفيديوهات تظهر
-    بحجم مريح للعين (زي اليوتيوب بالظبط)، ولما الطالب يحرك الماوس على الفيديو
-    هيحس بتفاعل شيك بفضل الـ CSS اللي حطيناه. قوليلي **"كملي"** عشان أبعتلك
-    الجزء الثالث اللي فيه الربط مع Firebase، وده الجزء اللي هيسحب الفيديوهات بس
-    ويفصلها عن الملازم.
+
+    <!-- Firebase Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
     <script>
-      // 1. إعدادات Firebase
+      /* =========================================
+           إعدادات Firebase
+           ========================================= */
       const firebaseConfig = {
         apiKey: "AIzaSyA4_aX-sRYpzZITrt0fF82ONoeb4d71GUA",
         authDomain: "maath-library-2026.firebaseapp.com",
@@ -234,9 +256,24 @@
       }
       const db = firebase.firestore();
 
-      let allVideos = []; // مخزن الفيديوهات للبحث السريع
+      // مخزن الفيديوهات للبحث السريع
+      let allVideos = [];
 
-      // 2. تشغيل الجلب عند فتح الصفحة
+      // قاموس أسماء المواد
+      const subjectNames = {
+        tech_edu: "تكنولوجيا التعليم",
+        cs_intro: "علوم الحاسب",
+        digital_photo: "التصوير الرقمي",
+        learning_res: "مصادر التعلم",
+        comm_skills: "مهارات التواصل",
+        edu_science: "العلوم التربوية",
+        curriculum: "المناهج",
+        social_issues: "قضايا مجتمعية",
+      };
+
+      /* =========================================
+           تشغيل الجلب عند فتح الصفحة
+           ========================================= */
       document.addEventListener("DOMContentLoaded", () => {
         fetchVideos();
 
@@ -246,13 +283,18 @@
           .addEventListener("input", (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = allVideos.filter((v) =>
-              v.name.toLowerCase().includes(term)
+              v.name.toLowerCase().includes(term),
             );
             renderVideoGrid(filtered);
           });
+
+        // تفعيل القائمة الجانبية للموبايل
+        setupMobileMenu();
       });
 
-      // 3. جلب الفيديوهات من السحابة
+      /* =========================================
+           جلب الفيديوهات من السحابة
+           ========================================= */
       function fetchVideos() {
         // بنجيب العناصر اللي نوعها (videos) فقط
         db.collection("files")
@@ -268,7 +310,11 @@
             const loader = document.getElementById("loadingOverlay");
             if (loader) loader.style.display = "none";
           });
-      } // 4. دالة بناء كروت الفيديوهات السينمائية
+      }
+
+      /* =========================================
+           بناء كروت الفيديوهات السينمائية
+           ========================================= */
       function renderVideoGrid(videos) {
         const grid = document.getElementById("videoGrid");
         grid.innerHTML = "";
@@ -283,35 +329,20 @@
         }
 
         videos.forEach((video) => {
-          const subjectNames = {
-            tech_edu: "تكنولوجيا التعليم",
-            cs_intro: "علوم الحاسب",
-            digital_photo: "التصوير الرقمي",
-            learning_res: "مصادر التعلم",
-            comm_skills: "مهارات التواصل",
-            edu_science: "العلوم التربوية",
-            curriculum: "المناهج",
-            social_issues: "قضايا مجتمعية",
-          };
-
           const card = document.createElement("div");
           card.className = "video-card animate__animated animate__zoomIn";
 
           card.innerHTML = `
                     <div class="video-thumbnail">
                         <i class="fas fa-play-circle play-overlay"></i>
-                        </div>
+                    </div>
                     <div class="card-info" style="padding: 20px;">
                         <span style="font-size: 0.75rem; color: #ef4444; font-weight: bold;">محاضرة مسجلة</span>
-                        <h3 style="font-size: 1rem; margin: 8px 0; color: white;">${
-                          video.name
-                        }</h3>
+                        <h3 style="font-size: 1rem; margin: 8px 0; color: white;">${video.name}</h3>
                         <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 15px;">
                             المادة: ${subjectNames[video.subject] || "عام"}
                         </p>
-                        <a href="${
-                          video.url
-                        }" target="_blank" class="btn-card" style="background: #ef4444; border-color: #ef4444; display: block; text-align: center; text-decoration: none;">
+                        <a href="${video.url}" target="_blank" class="btn-card" style="background: #ef4444; border-color: #ef4444; display: block; text-align: center; text-decoration: none;">
                             <i class="fas fa-play"></i> مشاهدة المحاضرة
                         </a>
                     </div>
@@ -320,7 +351,9 @@
         });
       }
 
-      // 5. دالة التصفية (فلترة) حسب المادة
+      /* =========================================
+           الفلترة (فلترة) حسب المادة
+           ========================================= */
       function filterVideos(subjectCode, btn) {
         document
           .querySelectorAll(".filter-btn")
@@ -335,13 +368,18 @@
         }
       }
 
-      // 6. تفعيل القائمة الجانبية للموبايل
-      const menuToggle = document.getElementById("menuToggle");
-      const sidebar = document.getElementById("sidebar");
-      if (menuToggle) {
-        menuToggle.addEventListener("click", () => {
-          sidebar.classList.toggle("active");
-        });
+      /* =========================================
+           تفعيل القائمة الجانبية للموبايل
+           ========================================= */
+      function setupMobileMenu() {
+        const menuToggle = document.getElementById("menuToggle");
+        const sidebar = document.getElementById("sidebar");
+
+        if (menuToggle && sidebar) {
+          menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+          });
+        }
       }
     </script>
   </body>

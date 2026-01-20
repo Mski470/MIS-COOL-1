@@ -1,21 +1,44 @@
 /* =========================================
-   1. الهوية البصرية والمتغيرات (Modern Dark UI)
+   منصة دفعة 2026 التعليمية
+   ملف CSS الرئيسي المنظم
+   ========================================= */
+
+/* =========================================
+   1. المتغيرات العامة (CSS Variables)
    ========================================= */
 :root {
+  /* الألوان الأساسية */
   --primary-blue: #3b82f6;
   --primary-hover: #2563eb;
+  --accent-color: #10b981;
+  --accent-purple: #8b5cf6;
+  --warning-yellow: #f59e0b;
+  --danger: #ef4444;
+
+  /* الخلفيات */
   --bg-dark: #0f172a;
   --bg-sidebar: #1e293b;
   --card-bg: rgba(30, 41, 59, 0.7);
+  --glass-bg: rgba(30, 41, 59, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --modal-overlay: rgba(0, 0, 0, 0.85);
+
+  /* النصوص */
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --accent-color: #10b981;
+
+  /* التأثيرات */
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.3),
-    0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  --shadow-lg:
+    0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+
+  /* الأبعاد */
   --sidebar-width: 280px;
 }
 
+/* =========================================
+   2. إعادة تعيين الأنماط الافتراضية
+   ========================================= */
 * {
   margin: 0;
   padding: 0;
@@ -30,7 +53,9 @@ body {
   overflow-x: hidden;
 }
 
-/* شاشة التحميل الذكية */
+/* =========================================
+   3. شاشة التحميل
+   ========================================= */
 .loading-overlay {
   position: fixed;
   inset: 0;
@@ -61,13 +86,103 @@ body {
   }
 }
 
-/* الحاوية الكبرى للموقع */
+/* =========================================
+   4. الإعلان المنبثق
+   ========================================= */
+.announcement-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--modal-overlay);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(8px);
+  padding: 20px;
+}
+
+.announcement-card {
+  background: var(--bg-sidebar);
+  width: 100%;
+  max-width: 500px;
+  border-radius: 24px;
+  border: 1px solid var(--warning-yellow);
+  padding: 30px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.announcement-card i.main-icon {
+  font-size: 3.5rem;
+  color: var(--warning-yellow);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.announcement-card h2 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  color: var(--text-main);
+}
+
+.announcement-card p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.close-announcement {
+  background: var(--warning-yellow);
+  color: #000;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.close-announcement:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+}
+
+.pulse-icon {
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    text-shadow: 0 0 0 rgba(245, 158, 11, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    text-shadow: 0 0 0 rgba(245, 158, 11, 0);
+  }
+}
+
+/* =========================================
+   5. الحاوية الرئيسية
+   ========================================= */
 .app-container {
   display: flex;
   min-height: 100vh;
   position: relative;
-} /* =========================================
-   2. القائمة الجانبية (Sidebar)
+}
+
+/* =========================================
+   6. القائمة الجانبية (Sidebar)
    ========================================= */
 .sidebar {
   width: var(--sidebar-width);
@@ -106,16 +221,16 @@ body {
   font-size: 1.3rem;
   font-weight: 800;
   background: linear-gradient(to left, #fff, #94a3b8);
-  background-clip: text; /* النسخة القياسية */
-  -webkit-background-clip: text; /* نسخة المتصفحات القديمة */
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent; /* زيادة تأكيد */
+  background-clip: text;
 }
 
 /* روابط التنقل */
 .sidebar-nav {
   flex: 1;
   padding: 10px 15px;
+  overflow-y: auto;
 }
 
 .sidebar-nav ul {
@@ -147,7 +262,7 @@ body {
   color: var(--primary-blue);
 }
 
-/* القائمة المنسدلة للمواد (Submenu) */
+/* القائمة المنسدلة */
 .has-submenu {
   position: relative;
 }
@@ -174,7 +289,7 @@ body {
 }
 
 .submenu.show {
-  max-height: 500px; /* القيمة تكبر لتسمح بظهور المواد */
+  max-height: 500px;
   padding: 10px 0;
 }
 
@@ -192,14 +307,41 @@ body {
   padding-right: 55px;
 }
 
+/* شارة "جديد" */
+.badge-new {
+  background: var(--warning-yellow);
+  color: #000;
+  font-size: 0.65rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 800;
+  margin-right: auto;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* فوتر السايدبار */
 .sidebar-footer {
   padding: 20px;
   text-align: center;
   font-size: 0.8rem;
   color: var(--text-muted);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-} /* =========================================
-   3. المحتوى الرئيسي والشريط العلوي
+}
+
+/* =========================================
+   7. المحتوى الرئيسي
    ========================================= */
 .main-wrapper {
   flex: 1;
@@ -209,6 +351,9 @@ body {
   background: radial-gradient(circle at top left, #1e293b, #0f172a);
 }
 
+/* =========================================
+   8. الشريط العلوي (Top Navbar)
+   ========================================= */
 .top-navbar {
   height: 70px;
   background: rgba(15, 23, 42, 0.8);
@@ -230,7 +375,23 @@ body {
   flex: 1;
 }
 
-/* شريط البحث الاحترافي */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* زر القائمة للموبايل */
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* شريط البحث */
 .search-box {
   position: relative;
   width: 100%;
@@ -262,68 +423,31 @@ body {
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
 }
 
-/* زر القائمة للموبايل */
-.menu-btn {
-  display: none;
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-/* شريط التنبيهات (News Ticker) */
-.news-ticker-container {
-  margin: 20px 30px;
-  background: rgba(30, 41, 59, 0.4);
-  border-radius: 15px;
+.date-chip {
+  background: rgba(59, 130, 246, 0.1);
+  padding: 8px 15px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  color: var(--primary-blue);
   display: flex;
   align-items: center;
-  overflow: hidden;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  gap: 8px;
 }
 
-.ticker-label {
-  background: var(--primary-blue);
-  color: white;
-  padding: 10px 20px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  white-space: nowrap;
-  z-index: 2;
+/* =========================================
+   9. محتوى الصفحة
+   ========================================= */
+.content-body {
+  padding: 30px;
 }
 
-.ticker-content {
-  flex: 1;
-  padding: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.ticker-text {
-  display: inline-block;
-  padding-right: 100%;
-  animation: ticker 25s linear infinite;
-  color: var(--text-main);
-}
-
-@keyframes ticker {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-/* كروت الوصول السريع (Quick Grid) */
+/* =========================================
+   10. الشبكة السريعة (Quick Grid)
+   ========================================= */
 .quick-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 25px;
-  padding: 30px;
 }
 
 .stat-card {
@@ -352,6 +476,11 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.card-info {
+  flex: 1;
 }
 
 .card-info h3 {
@@ -381,11 +510,145 @@ body {
 .btn-card:hover {
   background: var(--primary-blue);
   color: white;
-} /* =========================================
-   4. قسم أحدث الإضافات والفوتر
+}
+
+/* =========================================
+   11. الملاحظات الإعلانية
+   ========================================= */
+.notes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.note-item {
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.05) 0%,
+    rgba(30, 41, 59, 0.5) 100%
+  );
+  border-right: 4px solid var(--warning-yellow);
+  padding: 15px 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: var(--transition);
+  animation: fadeInRight 0.5s ease-out;
+}
+
+.note-item:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.1) 0%,
+    rgba(30, 41, 59, 0.8) 100%
+  );
+  transform: scale(1.01);
+}
+
+.note-item i {
+  font-size: 1.2rem;
+  color: var(--warning-yellow);
+}
+
+.note-item p {
+  color: var(--text-main);
+  font-size: 0.95rem;
+  margin: 0;
+  flex: 1;
+}
+
+.note-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+/* =========================================
+   12. الجداول الدراسية
+   ========================================= */
+.schedules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.schedule-item-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid var(--glass-border);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.schedule-item-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--accent-purple);
+  box-shadow: 0 15px 30px rgba(139, 92, 246, 0.2);
+}
+
+.schedule-item-card i.schedule-icon {
+  font-size: 2.5rem;
+  color: var(--accent-purple);
+  margin-bottom: 15px;
+}
+
+.schedule-item-card h3 {
+  font-size: 1.2rem;
+  color: var(--text-main);
+  margin-bottom: 15px;
+}
+
+.schedule-preview {
+  width: 100%;
+  height: 150px;
+  background: #0f172a;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.schedule-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  transition: 0.5s;
+}
+
+.schedule-item-card:hover .schedule-preview img {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.view-schedule-btn {
+  background: transparent;
+  color: var(--accent-purple);
+  border: 2px solid var(--accent-purple);
+  padding: 8px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.view-schedule-btn:hover {
+  background: var(--accent-purple);
+  color: white;
+}
+
+/* =========================================
+   13. أحدث الإضافات
    ========================================= */
 .recent-updates {
-  padding: 0 30px 40px;
+  margin-top: 40px;
 }
 
 .section-header {
@@ -416,7 +679,52 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* تنسيق الفوتر (Footer) */
+.update-item {
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.update-item:last-child {
+  border-bottom: none;
+}
+
+.update-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.update-info h4 {
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.update-info p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.update-link {
+  color: var(--primary-blue);
+  font-size: 1.2rem;
+  transition: var(--transition);
+}
+
+.update-link:hover {
+  transform: scale(1.2);
+}
+
+/* =========================================
+   14. الفوتر
+   ========================================= */
 .main-footer {
   margin-top: auto;
   padding: 40px 30px;
@@ -465,19 +773,71 @@ body {
 }
 
 /* =========================================
-   5. التوافق مع الشاشات (Responsive)
+   15. أزرار الفلترة
+   ========================================= */
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 30px;
+  justify-content: center;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.filter-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--primary-blue);
+  color: white;
+  border-color: var(--primary-blue);
+}
+
+/* =========================================
+   16. شريط التمرير المخصص
+   ========================================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--card-bg);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue);
+}
+
+/* =========================================
+   17. الاستجابة للشاشات (Responsive)
    ========================================= */
 @media (max-width: 992px) {
   .sidebar {
     position: fixed;
-    right: -100%; /* إخفاء السايدبار في الموبايل */
+    right: -100%;
     top: 0;
     height: 100%;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
   }
 
   .sidebar.active {
-    right: 0; /* إظهار السايدبار عند الضغط على الزر */
+    right: 0;
   }
 
   .menu-btn {
@@ -497,29 +857,99 @@ body {
     padding: 20px;
   }
 
-  .news-ticker-container {
-    margin: 15px;
+  .content-body {
+    padding: 20px 15px;
   }
 }
 
-/* تحسينات لبعض الحالات الخاصة */
-.date-chip {
-  background: rgba(59, 130, 246, 0.1);
-  padding: 8px 15px;
-  border-radius: 100px;
-  font-size: 0.85rem;
-  color: var(--primary-blue);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+@media (max-width: 768px) {
+  .note-item {
+    padding: 12px 15px;
+  }
+
+  .note-item p {
+    font-size: 0.85rem;
+  }
+
+  .announcement-card {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .announcement-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .announcement-card p {
+    font-size: 0.9rem;
+  }
+
+  .schedules-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .view-schedule-btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
   .search-box {
-    display: none; /* إخفاء البحث في الشاشات الصغيرة جداً لتوفير مساحة */
+    display: none;
   }
 
   .welcome-section h1 {
     font-size: 1.5rem;
+  }
+
+  .announcement-card {
+    padding: 15px;
+    border-radius: 15px;
+  }
+}
+
+/* =========================================
+   18. حالة الفارغ (Empty State)
+   ========================================= */
+.loader-container {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state i {
+  font-size: 4rem;
+  opacity: 0.3;
+  margin-bottom: 20px;
+}
+
+/* =========================================
+   19. انيميشنات مخصصة
+   ========================================= */
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

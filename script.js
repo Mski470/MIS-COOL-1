@@ -1,7 +1,11 @@
 /* =========================================
-   1. إعدادات Firebase الربط السحابي
+   منصة دفعة 2026 التعليمية
+   ملف JavaScript الرئيسي - نسخة مُحسنة تماماً
    ========================================= */
-// تأكدي أن هذه البيانات مطابقة لمشروعك في Firebase
+
+/* =========================================
+   1. إعدادات Firebase
+   ========================================= */
 const firebaseConfig = {
   apiKey: "AIzaSyA4_aX-sRYpzZITrt0fF82ONoeb4d71GUA",
   authDomain: "maath-library-2026.firebaseapp.com",
@@ -18,25 +22,62 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 
+// تفعيل Offline Persistence
+db.enablePersistence().catch((err) => {
+  if (err.code == "failed-precondition") {
+    console.log("Persistence failed: Multiple tabs open");
+  } else if (err.code == "unimplemented") {
+    console.log("Persistence not available");
+  }
+});
+
 /* =========================================
-   2. وظائف الواجهة الرئيسية (UI)
+   2. تشغيل التطبيق عند التحميل
    ========================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  // إخفاء شاشة التحميل بعد ثانية واحدة
+  console.log("🚀 بدء تحميل المنصة...");
+  initializeApp();
+});
+
+function initializeApp() {
+  // إخفاء شاشة التحميل
+  hideLoadingScreen();
+
+  // تحديث التاريخ
+  updateHeaderDate();
+
+  // تحميل البيانات من Firebase
+  loadAnnouncements();
+  loadSchedules();
+  loadRecentUploads();
+
+  // تفعيل الوظائف التفاعلية
+  setupMobileMenu();
+  setupDropdowns();
+  setupSearch();
+  setupAnnouncementClose();
+
+  console.log("✅ تم تحميل المنصة بنجاح!");
+}
+
+/* =========================================
+   3. إدارة شاشة التحميل
+   ========================================= */
+function hideLoadingScreen() {
   setTimeout(() => {
     const loader = document.getElementById("loadingOverlay");
     if (loader) {
       loader.style.opacity = "0";
-      setTimeout(() => (loader.style.display = "none"), 500);
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 500);
     }
   }, 1000);
+}
 
-  updateHeaderDate();
-  loadLiveAlerts();
-  loadRecentUploads();
-});
-
-// تحديث التاريخ في الهيدر
+/* =========================================
+   4. تحديث التاريخ في الهيدر
+   ========================================= */
 function updateHeaderDate() {
   const dateElement = document.getElementById("currentDate");
   if (dateElement) {
@@ -48,82 +89,270 @@ function updateHeaderDate() {
     };
     dateElement.innerText = new Date().toLocaleDateString("ar-EG", options);
   }
-} /* =========================================
-   3. جلب البيانات من Firestore
-   ========================================= */
-
-// وظيفة جلب التنبيهات العاجلة (شريط الأخبار)
-function loadLiveAlerts() {
-  const alertsList = document.getElementById("alertsList");
-  if (!alertsList) return;
-
-  db.collection("alerts")
-    .orderBy("createdAt", "desc")
-    .limit(5) // هنجيب آخر 5 تنبيهات بس
-    .onSnapshot((snapshot) => {
-      if (snapshot.empty) {
-        alertsList.innerHTML =
-          '<span class="ticker-text">لا توجد تنبيهات جديدة حالياً.. تابعونا!</span>';
-        return;
-      }
-
-      let alertsHTML = "";
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        alertsHTML += `<span class="ticker-text">${data.text} &nbsp;&nbsp; • &nbsp;&nbsp; </span>`;
-      });
-      alertsList.innerHTML = alertsHTML;
-    });
 }
 
-// وظيفة جلب "أحدث الإضافات" (الملفات)
-function loadRecentUploads() {
-  const container = document.getElementById("recentUploads");
-  if (!container) return;
-
-  db.collection("files")
-    .orderBy("createdAt", "desc")
-    .limit(4) // هنجيب آخر 4 حاجات اترفعت
-    .onSnapshot((snapshot) => {
-      if (snapshot.empty) {
-        container.innerHTML =
-          '<p style="padding: 20px; color: var(--text-muted);">لا توجد ملفات مرفوعة مؤخراً.</p>';
-        return;
-      }
-
-      let uploadsHTML = "";
-      snapshot.forEach((doc) => {
-        const file = doc.data();
-        uploadsHTML += `
-          <div class="data-row animate__animated animate__fadeInUp" style="padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 15px;">
-              <div style="color: var(--primary-blue); font-size: 1.2rem;">
-                <i class="${
-                  file.type === "video"
-                    ? "fas fa-play-circle"
-                    : "fas fa-file-pdf"
-                }"></i>
-              </div>
-              <div>
-                <h4 style="font-size: 0.95rem; margin-bottom: 2px;">${
-                  file.name
-                }</h4>
-                <small style="color: var(--text-muted);">${file.subject}</small>
-              </div>
-            </div>
-            <a href="${
-              file.url
-            }" target="_blank" class="btn-card" style="font-size: 0.8rem; padding: 4px 10px;">عرض</a>
-          </div>
-        `;
-      });
-      container.innerHTML = uploadsHTML;
-    });
-} /* =========================================
-   4. التحكم في القوائم والتفاعل (UI Logic)
+/* =========================================
+   5. جلب الملاحظات والإعلانات - محسّن تماماً
    ========================================= */
+function loadAnnouncements() {
+  const notesContainer = document.getElementById("notesContainer");
+  const overlay = document.getElementById("announcementOverlay");
+  const announceText = document.getElementById("announcementText");
 
-// دالة التحكم في القائمة الجانبية للموبايل
+  if (!notesContainer) {
+    console.warn("⚠️ notesContainer غير موجود");
+    return;
+  }
+
+  console.log("📢 جاري تحميل الملاحظات...");
+
+  // استخدام onSnapshot بشكل صحيح
+  const unsubscribe = db
+    .collection("announcements")
+    .orderBy("createdAt", "desc")
+    .onSnapshot(
+      (snapshot) => {
+        console.log("✅ تم استلام بيانات الملاحظات:", snapshot.size, "عنصر");
+
+        // مسح محتوى التحميل
+        notesContainer.innerHTML = "";
+
+        if (snapshot.empty) {
+          console.log("ℹ️ لا توجد ملاحظات في قاعدة البيانات");
+          notesContainer.innerHTML =
+            '<p style="text-align:center; color:var(--text-muted); padding: 20px;">لا توجد ملاحظات حالياً ✨</p>';
+
+          // إخفاء النافذة المنبثقة
+          if (overlay) {
+            overlay.style.display = "none";
+          }
+          return;
+        }
+
+        let count = 0;
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+
+          // تحديث الإعلان المنبثق بأحدث ملاحظة
+          if (count === 0 && overlay && announceText) {
+            announceText.innerText = data.text || "ملاحظة جديدة";
+            overlay.style.display = "flex";
+            const card = overlay.querySelector(".announcement-card");
+            if (card) {
+              card.classList.add("animate__zoomIn");
+            }
+          }
+
+          // إضافة الملاحظة لأرشيف الملاحظات
+          const date = data.createdAt
+            ? new Date(data.createdAt.seconds * 1000).toLocaleDateString(
+                "ar-EG",
+              )
+            : "الآن";
+
+          notesContainer.innerHTML += `
+            <div class="note-item">
+              <i class="fas fa-thumbtack"></i>
+              <p>${data.text || "ملاحظة"}</p>
+              <span class="note-date">${date}</span>
+            </div>
+          `;
+          count++;
+        });
+
+        console.log("✅ تم عرض", count, "ملاحظة");
+      },
+      (error) => {
+        console.error("❌ خطأ في تحميل الملاحظات:", error);
+        console.error("تفاصيل الخطأ:", error.message, error.code);
+
+        if (notesContainer) {
+          notesContainer.innerHTML =
+            '<p style="text-align:center; color:#ef4444; padding: 20px;">⚠️ حدث خطأ في تحميل الملاحظات<br><small>تحقق من الاتصال بالإنترنت</small></p>';
+        }
+        if (overlay) {
+          overlay.style.display = "none";
+        }
+      },
+    );
+}
+
+/* =========================================
+   6. جلب الجداول الدراسية - محسّن تماماً
+   ========================================= */
+function loadSchedules() {
+  const schedulesContainer = document.getElementById("schedulesContainer");
+
+  if (!schedulesContainer) {
+    console.warn("⚠️ schedulesContainer غير موجود");
+    return;
+  }
+
+  console.log("📅 جاري تحميل الجداول...");
+
+  const unsubscribe = db
+    .collection("schedules")
+    .orderBy("createdAt", "desc")
+    .onSnapshot(
+      (snapshot) => {
+        console.log("✅ تم استلام بيانات الجداول:", snapshot.size, "عنصر");
+
+        schedulesContainer.innerHTML = "";
+
+        if (snapshot.empty) {
+          console.log("ℹ️ لا توجد جداول في قاعدة البيانات");
+          schedulesContainer.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 30px; color: var(--text-muted);">
+              <i class="fas fa-calendar-times" style="font-size: 2rem; margin-bottom: 10px;"></i>
+              <p>لا توجد جداول محدثة حالياً 📆</p>
+              <small style="font-size: 0.85rem; opacity: 0.7;">سيتم إضافة الجداول قريباً</small>
+            </div>`;
+          return;
+        }
+
+        let count = 0;
+        snapshot.forEach((doc) => {
+          const schedule = doc.data();
+          const scheduleCard = `
+            <div class="schedule-item-card animate__animated animate__zoomIn">
+              <div class="schedule-preview">
+                <img src="${schedule.url || ""}" alt="${schedule.title || "جدول"}" 
+                     onerror="this.src='https://via.placeholder.com/300x150?text=Schedule+Image'">
+              </div>
+              <i class="fas fa-calendar-alt schedule-icon"></i>
+              <h3>${schedule.title || "جدول دراسي"}</h3>
+              <a href="${schedule.url || "#"}" target="_blank" class="view-schedule-btn">
+                عرض الجدول بالكامل
+              </a>
+            </div>
+          `;
+          schedulesContainer.innerHTML += scheduleCard;
+          count++;
+        });
+
+        console.log("✅ تم عرض", count, "جدول");
+      },
+      (error) => {
+        console.error("❌ خطأ في تحميل الجداول:", error);
+        console.error("تفاصيل الخطأ:", error.message, error.code);
+
+        schedulesContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 30px; color: #ef4444;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; margin-bottom: 10px;"></i>
+            <p>⚠️ حدث خطأ في تحميل الجداول</p>
+            <small style="font-size: 0.85rem;">تحقق من الاتصال بالإنترنت</small>
+          </div>`;
+      },
+    );
+}
+
+/* =========================================
+   7. جلب أحدث الإضافات - محسّن تماماً
+   ========================================= */
+function loadRecentUploads() {
+  const recentContainer = document.getElementById("recentUploads");
+
+  if (!recentContainer) {
+    console.warn("⚠️ recentUploads غير موجود");
+    return;
+  }
+
+  console.log("🆕 جاري تحميل أحدث الإضافات...");
+
+  const unsubscribe = db
+    .collection("files")
+    .orderBy("createdAt", "desc")
+    .limit(10)
+    .onSnapshot(
+      (snapshot) => {
+        console.log("✅ تم استلام أحدث الإضافات:", snapshot.size, "عنصر");
+
+        recentContainer.innerHTML = "";
+
+        if (snapshot.empty) {
+          console.log("ℹ️ لا توجد إضافات حديثة");
+          recentContainer.innerHTML =
+            '<p style="text-align:center; color:var(--text-muted); padding:20px;">لا توجد تحديثات جديدة اليوم 🌟</p>';
+          return;
+        }
+
+        let count = 0;
+        snapshot.forEach((doc) => {
+          const item = doc.data();
+          let icon, color, typeName;
+
+          // تحديد الأيقونة واللون بناءً على نوع المحتوى
+          switch (item.type) {
+            case "videos":
+              icon = "fa-play-circle";
+              color = "#ef4444";
+              typeName = "محاضرة مرئية";
+              break;
+            case "exams":
+              icon = "fa-pen-nib";
+              color = "#10b981";
+              typeName = "اختبار جديد";
+              break;
+            default:
+              icon = "fa-file-pdf";
+              color = "#3b82f6";
+              typeName = "ملف تعليمي";
+          }
+
+          const itemHtml = `
+            <div class="update-item animate__animated animate__fadeInRight">
+              <div class="update-icon" style="background: ${color}20; color: ${color};">
+                <i class="fas ${icon}"></i>
+              </div>
+              <div class="update-info">
+                <h4>${item.name || "عنصر جديد"}</h4>
+                <p>${typeName} • دفعة 2026</p>
+              </div>
+              <a href="${item.url || "#"}" target="_blank" class="update-link">
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          `;
+          recentContainer.innerHTML += itemHtml;
+          count++;
+        });
+
+        console.log("✅ تم عرض", count, "إضافة");
+      },
+      (error) => {
+        console.error("❌ خطأ في تحميل الإضافات:", error);
+        console.error("تفاصيل الخطأ:", error.message, error.code);
+
+        recentContainer.innerHTML =
+          '<p style="text-align:center; color:#ef4444; padding:20px;">⚠️ حدث خطأ في تحميل التحديثات</p>';
+      },
+    );
+}
+
+/* =========================================
+   8. إغلاق الإعلان المنبثق
+   ========================================= */
+function setupAnnouncementClose() {
+  const closeBtn = document.getElementById("closeAnnouncement");
+  const overlay = document.getElementById("announcementOverlay");
+
+  if (closeBtn && overlay) {
+    closeBtn.addEventListener("click", () => {
+      const card = overlay.querySelector(".announcement-card");
+      if (card) {
+        card.classList.remove("animate__zoomIn");
+        card.classList.add("animate__zoomOut");
+      }
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 400);
+    });
+  }
+}
+
+/* =========================================
+   9. القائمة الجانبية للموبايل
+   ========================================= */
 function setupMobileMenu() {
   const menuToggle = document.getElementById("menuToggle");
   const sidebar = document.getElementById("sidebar");
@@ -134,7 +363,7 @@ function setupMobileMenu() {
       sidebar.classList.toggle("active");
     });
 
-    // إغلاق القائمة عند الضغط في أي مكان خارجها
+    // إغلاق القائمة عند النقر خارجها
     document.addEventListener("click", (e) => {
       if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
         sidebar.classList.remove("active");
@@ -143,7 +372,9 @@ function setupMobileMenu() {
   }
 }
 
-// دالة تشغيل القائمة المنسدلة للمواد الدراسية
+/* =========================================
+   10. القوائم المنسدلة
+   ========================================= */
 function setupDropdowns() {
   const subjectsBtn = document.getElementById("subjectsBtn");
   const subjectsMenu = document.getElementById("subjectsMenu");
@@ -153,45 +384,84 @@ function setupDropdowns() {
       e.preventDefault();
       e.stopPropagation();
 
-      // تبديل الفتح والإغلاق
-      const isOpened = subjectsMenu.classList.contains("show");
-
-      // إغلاق أي قوائم أخرى لو موجودة
       subjectsMenu.classList.toggle("show");
-      subjectsBtn.querySelector(".submenu-arrow").classList.toggle("rotate");
-    });
-  }
-}
-
-// دالة البحث الذكي
-function setupSearch() {
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter" && searchInput.value.trim() !== "") {
-        const query = searchInput.value.trim();
-        // التوجه لصفحة نتائج البحث مع إرسال الكلمة في الرابط
-        window.location.href = `search-results.html?q=${encodeURIComponent(
-          query
-        )}`;
+      const arrow = subjectsBtn.querySelector(".submenu-arrow");
+      if (arrow) {
+        arrow.classList.toggle("rotate");
       }
     });
   }
 }
 
-// استدعاء كل الدوال عند التحميل
-setupMobileMenu();
-setupDropdowns();
-setupSearch(); /* =========================================
-   5. معالج الروابط والديناميكية
+/* =========================================
+   11. نظام البحث الذكي
    ========================================= */
+function setupSearch() {
+  const searchInput = document.getElementById("searchInput");
 
-// دالة لإضافة انيميشن عند الانتقال بين الصفحات
+  if (!searchInput) return;
+
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      const query = searchInput.value.trim();
+      if (query.length > 0) {
+        // إظهار شاشة التحميل
+        const loader = document.getElementById("loadingOverlay");
+        if (loader) {
+          loader.style.display = "flex";
+          loader.style.opacity = "1";
+        }
+        // التوجه لصفحة النتائج
+        window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+      } else {
+        alert("لطفاً، اكتبي كلمة للبحث عنها أولاً 🌸");
+      }
+    }
+  });
+}
+
+/* =========================================
+   12. انيميشن الظهور عند التمرير
+   ========================================= */
+function setupScrollReveal() {
+  const observerOptions = {
+    threshold: 0.1,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("animate__animated", "animate__fadeInUp");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // مراقبة جميع السكشنات والكروت
+  document
+    .querySelectorAll("section, .content-card, .schedule-item-card")
+    .forEach((el) => {
+      observer.observe(el);
+    });
+}
+
+/* =========================================
+   13. إضافة انيميشن عند الانتقال بين الصفحات
+   ========================================= */
+/* =========================================
+   13. إضافة انيميشن عند الانتقال بين الصفحات - نسخة مصلحة
+   ========================================= */
 document.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", function (e) {
     const href = this.getAttribute("href");
-    if (href && href !== "#" && !href.startsWith("javascript")) {
-      // إظهار شاشة التحميل قبل الانتقال
+
+    // التحقق أن الرابط ليس فارغاً، ولا يبدأ بـ #، ولا يحتوي على جافا سكريبت
+    if (
+      href &&
+      href !== "#" &&
+      !href.startsWith("#") &&
+      !href.startsWith("javascript")
+    ) {
       const loader = document.getElementById("loadingOverlay");
       if (loader) {
         loader.style.display = "flex";
@@ -200,12 +470,18 @@ document.querySelectorAll("a").forEach((link) => {
     }
   });
 });
-
-// دالة مساعدة لجلب معرفات الروابط (URL Parameters)
-// هنستخدمها في صفحة المادة لاحقاً
+/* =========================================
+   14. دالة مساعدة لجلب معرفات الروابط
+   ========================================= */
 function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get(param);
 }
 
-console.log("✅ تم تحميل نظام منصة 2026 بنجاح");
+/* =========================================
+   15. تشغيل انيميشن التمرير
+   ========================================= */
+setupScrollReveal();
+
+// رسالة نجاح التحميل
+console.log("✅ منصة دفعة 2026 جاهزة للعمل بأعلى جودة!");

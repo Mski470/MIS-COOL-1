@@ -1,28 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>الجدول الدراسي | منصة تكنولوجيا التعليم 2026</title>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
+    <!-- Animate.css -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css" />
 
     <style>
-      /* ستايل حصري لصفحة الجدول لضمان أعلى جودة بصرياً */
+      /* ستايل حصري لصفحة الجدول */
       :root {
         --sch-purple: #8b5cf6;
         --sch-dark-purple: #4c1d95;
@@ -42,7 +49,6 @@
         margin: 0 auto;
       }
 
-      /* تنسيق كرت الجدول الكبير */
       .schedule-card {
         background: var(--sch-glass);
         backdrop-filter: blur(10px);
@@ -50,11 +56,13 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
         overflow: hidden;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      } /* ستايل الجدول الاحترافي */
+      }
+
+      /* ستايل الجدول الاحترافي */
       .schedule-table {
         width: 100%;
         border-collapse: separate;
-        border-spacing: 0 12px; /* مسافة بين الصفوف لشكل عصري */
+        border-spacing: 0 12px;
         margin-top: 20px;
       }
 
@@ -75,10 +83,10 @@
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      /* حواف دائرية لأول وأخر خلية في كل صف */
       .schedule-table td:first-child {
         border-radius: 0 15px 15px 0;
       }
+
       .schedule-table td:last-child {
         border-radius: 15px 0 0 15px;
       }
@@ -89,7 +97,6 @@
         color: #fff;
       }
 
-      /* الأوسمة الخاصة باليوم والحالة */
       .day-badge {
         background: linear-gradient(
           45deg,
@@ -108,7 +115,9 @@
         font-family: "Courier New", monospace;
         font-weight: bold;
         color: #10b981;
-      } /* ستايلات الحالات (مباشر / مسجل / قادم) */
+      }
+
+      /* ستايلات الحالات (مباشر / مسجل) */
       .status-badge {
         display: inline-flex;
         align-items: center;
@@ -119,7 +128,6 @@
         font-weight: 700;
       }
 
-      /* حالة البث المباشر مع النبض */
       .status-live {
         background: rgba(239, 68, 68, 0.1);
         color: #ef4444;
@@ -130,16 +138,15 @@
         animation: pulse-red 1.5s infinite;
       }
 
-      /* حالة المحاضرة المسجلة */
       .status-recorded {
         background: rgba(59, 130, 246, 0.1);
         color: #3b82f6;
         border: 1px solid rgba(59, 130, 246, 0.2);
       }
 
-      /* تعريف حركة النبض */
       @keyframes pulse-red {
-        0% {
+        0%,
+        100% {
           transform: scale(0.9);
           opacity: 0.7;
         }
@@ -147,17 +154,14 @@
           transform: scale(1.2);
           opacity: 1;
         }
-        100% {
-          transform: scale(0.9);
-          opacity: 0.7;
-        }
       }
 
-      /* تحسينات الموبايل لعدم حدوث أخطاء في العرض */
+      /* تحسينات الموبايل */
       @media (max-width: 992px) {
         .schedule-table thead {
           display: none;
-        } /* إخفاء الرأس في الموبايل */
+        }
+
         .schedule-table td {
           display: block;
           text-align: left;
@@ -166,6 +170,7 @@
           border-radius: 0 !important;
           border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
+
         .schedule-table td::before {
           content: attr(data-label);
           position: absolute;
@@ -178,62 +183,111 @@
   </head>
   <body>
     <div class="app-container">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo-icon" style="background: var(--sch-purple); box-shadow: 0 0 20px var(--sch-purple);">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <h2>جدول 2026</h2>
+      <!-- القائمة الجانبية -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div
+            class="logo-icon"
+            style="
+              background: var(--sch-purple);
+              box-shadow: 0 0 20px var(--sch-purple);
+            "
+          >
+            <i class="fas fa-calendar-alt"></i>
+          </div>
+          <h2>جدول 2026</h2>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-link"
+                ><i class="fas fa-home"></i><span>الرئيسية</span></a
+              >
+            </li>
+            <li>
+              <a href="library.html" class="nav-link"
+                ><i class="fas fa-book-open"></i><span>المكتبة</span></a
+              >
+            </li>
+            <li class="active">
+              <a href="schedule.html" class="nav-link"
+                ><i class="fas fa-clock"></i><span>الجدول</span></a
+              >
+            </li>
+            <li>
+              <a href="video-gallery.html" class="nav-link"
+                ><i class="fas fa-video"></i><span>المحاضرات</span></a
+              >
+            </li>
+            <li>
+              <a href="exams.html" class="nav-link"
+                ><i class="fas fa-pen-nib"></i><span>الامتحانات</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- المحتوى الرئيسي -->
+      <main class="main-wrapper">
+        <!-- الشريط العلوي -->
+        <header class="top-navbar">
+          <div class="header-left">
+            <button class="menu-btn" id="menuToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+          <div class="header-right">
+            <div class="date-chip">
+              <span>أهلاً بكِ في جدولكِ الدراسي</span>
+              <div class="avatar"><i class="fas fa-user-graduate"></i></div>
             </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
-                    <li><a href="library.html" class="nav-link"><i class="fas fa-book-open"></i><span>المكتبة</span></a></li>
-                    <li class="active"><a href="schedule.html" class="nav-link"><i class="fas fa-clock"></i><span>الجدول</span></a></li>
-                    <li><a href="video-gallery.html" class="nav-link"><i class="fas fa-video"></i><span>المحاضرات</span></a></li>
-                    <li><a href="exams.html" class="nav-link"><i class="fas fa-pen-nib"></i><span>الامتحانات</span></a></li>
-                </ul>
-            </nav>
-        </aside>
+          </div>
+        </header>
 
-        <main class="main-content">
-            <header class="top-header">
-                <button class="toggle-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
-                <div class="user-profile">
-                    <span>أهلاً بكِ في جدولكِ الدراسي</span>
-                    <div class="avatar"><i class="fas fa-user-graduate"></i></div>
-                </div>
-            </header>
-
-            <div class="page-body">
-                <div class="schedule-wrapper">
-                    <div class="section-title animate__animated animate__fadeInDown">
-                        <h1 style="color: var(--sch-purple); font-size: 2.2rem; margin-bottom: 10px;">
-                            <i class="fas fa-calendar-check"></i> تنظيم الوقت الدراسي
-                        </h1>
-                        <p style="color: #94a3b8;">هنا تجدين مواعيد محاضراتكِ المباشرة والمسجلة بكل دقة.</p>
-                    </div>
-
-                    <div class="schedule-card animate__animated animate__fadeInUp">
-                        <table class="schedule-table">
-                            <thead>
-                                <tr>
-                                    <th>اليوم</th>
-                                    <th>المادة الدراسية</th>
-                                    <th>الوقت (توقيت القاهرة)</th>
-                                    <th>نوع المحاضرة</th>
-                                    <th>رابط الحضور</th>
-                                </tr>
-                            </thead>
-                            <tbody id="scheduleTableBody">
-                                </tbody>
-                        </table>
-                    </div>
-                </div>
+        <!-- محتوى الصفحة -->
+        <div class="content-body">
+          <div class="schedule-wrapper">
+            <div class="section-title animate__animated animate__fadeInDown">
+              <h1
+                style="
+                  color: var(--sch-purple);
+                  font-size: 2.2rem;
+                  margin-bottom: 10px;
+                "
+              >
+                <i class="fas fa-calendar-check"></i> تنظيم الوقت الدراسي
+              </h1>
+              <p style="color: #94a3b8">
+                هنا تجدين مواعيد محاضراتكِ المباشرة والمسجلة بكل دقة.
+              </p>
             </div>
-        </main>
+
+            <div class="schedule-card animate__animated animate__fadeInUp">
+              <table class="schedule-table">
+                <thead>
+                  <tr>
+                    <th>اليوم</th>
+                    <th>المادة الدراسية</th>
+                    <th>الوقت (توقيت القاهرة)</th>
+                    <th>نوع المحاضرة</th>
+                    <th>رابط الحضور</th>
+                  </tr>
+                </thead>
+                <tbody id="scheduleTableBody">
+                  <!-- سيتم ملؤها بـ JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-      // 1. مصفوفة البيانات: هنا تقدري تعدلي المواعيد والمواد بسهولة
+
+    <script>
+      /* =========================================
+           مصفوفة البيانات - يمكن تعديلها بسهولة
+           ========================================= */
       const mySchedule = [
         {
           day: "الأحد",
@@ -293,15 +347,16 @@
         },
       ];
 
-      // 2. دالة عرض الجدول في الصفحة
+      /* =========================================
+           عرض الجدول في الصفحة
+           ========================================= */
       function renderMySchedule() {
         const tableBody = document.getElementById("scheduleTableBody");
-        if (!tableBody) return; // حماية من الإيرور في حال عدم وجود العنصر
+        if (!tableBody) return;
 
-        tableBody.innerHTML = ""; // تنظيف الجدول قبل الملء
+        tableBody.innerHTML = "";
 
         mySchedule.forEach((item) => {
-          // تحديد شكل "الوسم" بناءً على النوع
           const isLive = item.type === "live";
           const statusHTML = isLive
             ? `<span class="status-badge status-live"><i class="fas fa-broadcast-tower"></i> مباشر الآن</span>`
@@ -322,11 +377,14 @@
                 `;
           tableBody.innerHTML += row;
         });
-      } // 3. تفعيل القائمة الجانبية للموبايل (Sidebar Toggle)
+      }
+
+      /* =========================================
+           تفعيل القائمة الجانبية للموبايل
+           ========================================= */
       document.addEventListener("DOMContentLoaded", () => {
-        const menuBtn = document.getElementById("menuBtn");
+        const menuBtn = document.getElementById("menuToggle");
         const sidebar = document.getElementById("sidebar");
-        const mainContent = document.querySelector(".main-content");
 
         if (menuBtn && sidebar) {
           menuBtn.addEventListener("click", (e) => {
@@ -334,7 +392,6 @@
             sidebar.classList.toggle("active");
           });
 
-          // إغلاق القائمة عند الضغط في أي مكان خارجها (للموبايل)
           document.addEventListener("click", (e) => {
             if (
               sidebar.classList.contains("active") &&
@@ -346,7 +403,7 @@
           });
         }
 
-        // 4. تشغيل بناء الجدول فوراً
+        // تشغيل بناء الجدول
         renderMySchedule();
       });
     </script>
@@ -355,20 +412,20 @@
       @media (max-width: 992px) {
         .sidebar {
           position: fixed;
-          right: -280px; /* مخفي جهة اليمين */
+          right: -280px;
           transition: all 0.4s ease;
           z-index: 1000;
         }
         .sidebar.active {
-          right: 0; /* يظهر عند الضغط */
+          right: 0;
         }
-        .main-content {
+        .main-wrapper {
           margin-right: 0 !important;
           width: 100% !important;
         }
       }
 
-      /* تحسين شكل السكرول بار (Scrollbar) */
+      /* تحسين شكل السكرول بار */
       ::-webkit-scrollbar {
         width: 8px;
       }
