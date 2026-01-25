@@ -1,6 +1,6 @@
 /* =========================================
    منصة دفعة 2026 التعليمية
-   ملف JavaScript الرئيسي - نسخة مُحسنة تماماً
+   ملف JavaScript الرئيسي - نسخة محسنة تماماً
    ========================================= */
 
 /* =========================================
@@ -448,9 +448,6 @@ function setupScrollReveal() {
 /* =========================================
    13. إضافة انيميشن عند الانتقال بين الصفحات
    ========================================= */
-/* =========================================
-   13. إضافة انيميشن عند الانتقال بين الصفحات - نسخة مصلحة
-   ========================================= */
 document.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", function (e) {
     const href = this.getAttribute("href");
@@ -470,6 +467,7 @@ document.querySelectorAll("a").forEach((link) => {
     }
   });
 });
+
 /* =========================================
    14. دالة مساعدة لجلب معرفات الروابط
    ========================================= */
@@ -482,6 +480,101 @@ function getQueryParam(param) {
    15. تشغيل انيميشن التمرير
    ========================================= */
 setupScrollReveal();
+
+/* =========================================
+   16. نظام الجزيئات المتحركة - Advanced Loader
+   ========================================= */
+class ParticleSystem {
+  constructor() {
+    this.canvas = document.getElementById("particlesCanvas");
+    if (!this.canvas) return;
+
+    this.ctx = this.canvas.getContext("2d");
+    this.particles = [];
+    this.particleCount = 80;
+
+    this.resize();
+    this.init();
+    window.addEventListener("resize", () => this.resize());
+  }
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  init() {
+    for (let i = 0; i < this.particleCount; i++) {
+      this.particles.push({
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 2 + 1,
+        opacity: Math.random() * 0.5 + 0.3,
+      });
+    }
+  }
+
+  update() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.particles.forEach((p, i) => {
+      // تحديث الموقع
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // إعادة التدوير عند الحواف
+      if (p.x < 0 || p.x > this.canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > this.canvas.height) p.vy *= -1;
+
+      // رسم الجزيء
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      this.ctx.fillStyle = `rgba(0, 242, 255, ${p.opacity})`;
+      this.ctx.fill();
+
+      // رسم الخطوط بين الجزيئات القريبة
+      this.particles.slice(i + 1).forEach((p2) => {
+        const dx = p.x - p2.x;
+        const dy = p.y - p2.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 120) {
+          this.ctx.beginPath();
+          this.ctx.moveTo(p.x, p.y);
+          this.ctx.lineTo(p2.x, p2.y);
+          this.ctx.strokeStyle = `rgba(123, 104, 238, ${0.2 * (1 - distance / 120)})`;
+          this.ctx.lineWidth = 0.5;
+          this.ctx.stroke();
+        }
+      });
+    });
+
+    requestAnimationFrame(() => this.update());
+  }
+}
+
+/* =========================================
+   17. تشغيل نظام الجزيئات عند التحميل
+   ========================================= */
+const particleSystem = new ParticleSystem();
+if (particleSystem.canvas) {
+  particleSystem.update();
+}
+
+// إخفاء الشاشة بعد 4.5 ثانية
+setTimeout(() => {
+  const loader = document.getElementById("advancedLoader");
+  if (loader) {
+    loader.classList.add("fade-out");
+
+    setTimeout(() => {
+      loader.style.display = "none";
+      document.body.style.overflow = "auto";
+    }, 1000);
+  }
+}, 4500);
 
 // رسالة نجاح التحميل
 console.log("✅ منصة دفعة 2026 جاهزة للعمل بأعلى جودة!");
