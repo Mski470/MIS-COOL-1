@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نتائج البحث | منصة تكنولوجيا التعليم</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      .search-header {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        padding: 40px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .search-query {
+        font-size: 1.8rem;
+        color: var(--primary-blue);
+        margin-bottom: 10px;
+      }
+
+      .result-item {
+        background: var(--card-bg);
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: var(--transition);
+      }
+
+      .result-item:hover {
+        border-color: var(--primary-blue);
+        transform: translateX(-5px);
+      }
+
+      .result-type-badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        margin-left: 10px;
+      }
+
+      .type-file {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+      }
+
+      .type-video {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .type-exam {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+
+      .no-results {
+        text-align: center;
+        padding: 80px 20px;
+      }
+
+      .no-results i {
+        font-size: 4rem;
+        color: var(--text-muted);
+        opacity: 0.3;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- شاشة التحميل -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loader"></div>
+    </div>
+
+    <!-- الحاوية الرئيسية -->
+    <div class="app-container">
+      <!-- القائمة الجانبية -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-icon"><i class="fas fa-search"></i></div>
+          <h2 style="font-size: 1.1rem">نتائج البحث</h2>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-link"
+                ><i class="fas fa-home"></i><span>الرئيسية</span></a
+              >
+            </li>
+            <li>
+              <a href="library.html" class="nav-link"
+                ><i class="fas fa-folder-open"></i><span>المكتبة</span></a
+              >
+            </li>
+            <li>
+              <a href="video-gallery.html" class="nav-link"
+                ><i class="fas fa-video"></i><span>الفيديوهات</span></a
+              >
+            </li>
+            <li>
+              <a href="exams.html" class="nav-link"
+                ><i class="fas fa-graduation-cap"></i><span>الامتحانات</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- المحتوى الرئيسي -->
+      <main class="main-wrapper">
+        <!-- الشريط العلوي -->
+        <header class="top-navbar">
+          <div class="header-left">
+            <button class="menu-btn" id="menuToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input type="text" id="newSearch" placeholder="بحث جديد..." />
+            </div>
+          </div>
+          <div class="header-right">
+            <a href="index.html" class="btn-card" style="text-decoration: none">
+              <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </a>
+          </div>
+        </header>
+
+        <!-- محتوى الصفحة -->
+        <div class="content-body">
+          <!-- رأس البحث -->
+          <section class="search-header animate__animated animate__fadeIn">
+            <h1 style="color: white; font-size: 1.3rem; margin-bottom: 15px">
+              <i class="fas fa-search-plus"></i> نتائج البحث عن:
+            </h1>
+            <div class="search-query" id="searchQuery">جاري التحميل...</div>
+            <p style="color: var(--text-muted)">
+              <span id="resultCount">0</span> نتيجة تم العثور عليها
+            </p>
+          </section>
+
+          <!-- أزرار الفلترة -->
+          <div class="filter-section animate__animated animate__fadeInUp">
+            <button
+              class="filter-btn active"
+              onclick="filterResults('all', this)"
+            >
+              الكل
+            </button>
+            <button class="filter-btn" onclick="filterResults('files', this)">
+              الملفات
+            </button>
+            <button class="filter-btn" onclick="filterResults('videos', this)">
+              الفيديوهات
+            </button>
+            <button class="filter-btn" onclick="filterResults('exams', this)">
+              الامتحانات
+            </button>
+          </div>
+
+          <!-- نتائج البحث -->
+          <div id="resultsContainer">
+            <div
+              class="loader-container"
+              style="text-align: center; padding: 50px"
+            >
+              <div class="loader" style="margin: 0 auto"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+      /* =========================================
+           إعدادات Firebase
+           ========================================= */
+      const firebaseConfig = {
+        apiKey: "AIzaSyA4_aX-sRYpzZITrt0fF82ONoeb4d71GUA",
+        authDomain: "maath-library-2026.firebaseapp.com",
+        projectId: "maath-library-2026",
+        storageBucket: "maath-library-2026.firebasestorage.app",
+        messagingSenderId: "667101666048",
+        appId: "1:667101666048:web:220bcfef7157c9b369b1e5",
+      };
+
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      const db = firebase.firestore();
+
+      let allResults = [];
+      let searchTerm = "";
+
+      // قاموس أسماء المواد
+      const subjectNames = {
+        tech_edu: "تكنولوجيا التعليم",
+        cs_intro: "علوم الحاسب",
+        digital_photo: "التصوير الرقمي",
+        learning_res: "مصادر التعلم",
+        comm_skills: "مهارات التواصل",
+        edu_science: "العلوم التربوية",
+        curriculum: "المناهج",
+        social_issues: "قضايا مجتمعية",
+      };
+
+      /* =========================================
+           التشغيل عند التحميل
+           ========================================= */
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        searchTerm = urlParams.get("q") || "";
+
+        if (searchTerm) {
+          document.getElementById("searchQuery").innerText = `"${searchTerm}"`;
+          performSearch(searchTerm);
+        } else {
+          window.location.href = "index.html";
+        }
+
+        // تفعيل البحث الجديد
+        document
+          .getElementById("newSearch")
+          .addEventListener("keypress", (e) => {
+            if (e.key === "Enter" && e.target.value.trim()) {
+              window.location.href = `search-results.html?q=${encodeURIComponent(e.target.value.trim())}`;
+            }
+          });
+
+        // إخفاء شاشة التحميل
+        setTimeout(() => {
+          const loader = document.getElementById("loadingOverlay");
+          if (loader) loader.style.display = "none";
+        }, 800);
+
+        // تفعيل القائمة الجانبية للموبايل
+        setupMobileMenu();
+      });
+
+      /* =========================================
+           تنفيذ البحث
+           ========================================= */
+      function performSearch(query) {
+        const container = document.getElementById("resultsContainer");
+        const lowerQuery = query.toLowerCase();
+
+        db.collection("files")
+          .get()
+          .then((snapshot) => {
+            allResults = [];
+
+            snapshot.forEach((doc) => {
+              const data = doc.data();
+              if (data.name.toLowerCase().includes(lowerQuery)) {
+                allResults.push({ id: doc.id, ...data });
+              }
+            });
+
+            displayResults(allResults);
+          });
+      }
+
+      /* =========================================
+           عرض النتائج
+           ========================================= */
+      function displayResults(results) {
+        const container = document.getElementById("resultsContainer");
+        const countEl = document.getElementById("resultCount");
+
+        countEl.innerText = results.length;
+        container.innerHTML = "";
+
+        if (results.length === 0) {
+          container.innerHTML = `
+                    <div class="no-results animate__animated animate__fadeIn">
+                        <i class="fas fa-search-minus"></i>
+                        <h2 style="color: var(--text-muted);">لم يتم العثور على نتائج</h2>
+                        <p style="color: var(--text-muted); margin-top: 10px;">
+                            جرب كلمات بحث مختلفة أو تصفح المكتبة مباشرة
+                        </p>
+                        <a href="library.html" class="btn-card" style="margin-top: 20px; display: inline-block;">
+                            تصفح المكتبة
+                        </a>
+                    </div>
+                `;
+          return;
+        }
+
+        results.forEach((item) => {
+          const typeMap = {
+            files: {
+              label: "ملف PDF",
+              class: "type-file",
+              icon: "fa-file-pdf",
+            },
+            videos: {
+              label: "محاضرة فيديو",
+              class: "type-video",
+              icon: "fa-play-circle",
+            },
+            exams: {
+              label: "اختبار",
+              class: "type-exam",
+              icon: "fa-graduation-cap",
+            },
+          };
+
+          const typeInfo = typeMap[item.type] || typeMap.files;
+
+          const resultDiv = document.createElement("div");
+          resultDiv.className =
+            "result-item animate__animated animate__fadeInUp";
+          resultDiv.innerHTML = `
+                    <div style="display: flex; align-items: start; gap: 20px;">
+                        <div style="font-size: 2rem; color: ${typeInfo.class === "type-file" ? "#3b82f6" : typeInfo.class === "type-video" ? "#ef4444" : "#10b981"};">
+                            <i class="fas ${typeInfo.icon}"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div>
+                                <span class="result-type-badge ${typeInfo.class}">${typeInfo.label}</span>
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">
+                                    ${subjectNames[item.subject] || "عام"}
+                                </span>
+                            </div>
+                            <h3 style="margin: 10px 0; font-size: 1.2rem;">${item.name}</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                                تم رفعه في قسم ${subjectNames[item.subject] || "المواد العامة"}
+                            </p>
+                            <a href="${item.url}" target="_blank" class="btn-card" style="display: inline-block;">
+                                <i class="fas fa-external-link-alt"></i> 
+                                ${item.type === "videos" ? "مشاهدة" : item.type === "exams" ? "ابدأ الاختبار" : "تحميل"}
+                            </a>
+                        </div>
+                    </div>
+                `;
+          container.appendChild(resultDiv);
+        });
+      }
+
+      /* =========================================
+           فلترة النتائج
+           ========================================= */
+      function filterResults(type, btn) {
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        if (type === "all") {
+          displayResults(allResults);
+        } else {
+          const filtered = allResults.filter((r) => r.type === type);
+          displayResults(filtered);
+        }
+      }
+
+      /* =========================================
+           تفعيل القائمة الجانبية للموبايل
+           ========================================= */
+      function setupMobileMenu() {
+        const menuToggle = document.getElementById("menuToggle");
+        const sidebar = document.getElementById("sidebar");
+
+        if (menuToggle && sidebar) {
+          menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

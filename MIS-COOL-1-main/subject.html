@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>المادة الدراسية | منصة تكنولوجيا التعليم 2026</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      /* ستايل خاص بصفحة المادة */
+      .subject-header {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        padding: 50px 40px;
+        border-radius: 25px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+      }
+
+      .subject-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+      }
+
+      .content-section {
+        margin-bottom: 40px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        color: var(--primary-blue);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+      }
+
+      .content-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 25px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: var(--transition);
+      }
+
+      .content-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-blue);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+      }
+
+      .empty-state i {
+        font-size: 4rem;
+        opacity: 0.3;
+        margin-bottom: 20px;
+      }
+
+      .type-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .badge-file {
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+      }
+
+      .badge-video {
+        background: rgba(239, 68, 68, 0.1);
+        color: #ef4444;
+      }
+
+      .badge-exam {
+        background: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- شاشة التحميل -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loader"></div>
+    </div>
+
+    <!-- الحاوية الرئيسية -->
+    <div class="app-container">
+      <!-- القائمة الجانبية -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-icon"><i class="fas fa-book-open"></i></div>
+          <h2 style="font-size: 1.1rem">تكنولوجيا التعليم</h2>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="index.html" class="nav-link"
+                ><i class="fas fa-home"></i><span>الرئيسية</span></a
+              >
+            </li>
+            <li class="active">
+              <a href="index.html#subjects" class="nav-link"
+                ><i class="fas fa-book"></i><span>المواد الدراسية</span></a
+              >
+            </li>
+            <li>
+              <a href="library.html" class="nav-link"
+                ><i class="fas fa-folder-open"></i
+                ><span>المكتبة الرقمية</span></a
+              >
+            </li>
+            <li>
+              <a href="video-gallery.html" class="nav-link"
+                ><i class="fas fa-video"></i><span>المحاضرات المرئية</span></a
+              >
+            </li>
+            <li>
+              <a href="exams.html" class="nav-link"
+                ><i class="fas fa-graduation-cap"></i><span>التقييمات</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- المحتوى الرئيسي -->
+      <main class="main-wrapper">
+        <!-- الشريط العلوي -->
+        <header class="top-navbar">
+          <div class="header-left">
+            <button class="menu-btn" id="menuToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="ابحث في محتوى المادة..."
+              />
+            </div>
+          </div>
+          <div class="header-right">
+            <a href="index.html" class="btn-card" style="text-decoration: none">
+              <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </a>
+          </div>
+        </header>
+
+        <!-- محتوى الصفحة -->
+        <div class="content-body">
+          <!-- رأس المادة -->
+          <section class="subject-header animate__animated animate__fadeIn">
+            <div class="subject-icon" id="subjectIcon">
+              <i class="fas fa-book"></i>
+            </div>
+            <h1 id="subjectTitle" style="font-size: 2rem; margin-bottom: 10px">
+              جاري التحميل...
+            </h1>
+            <p
+              id="subjectDesc"
+              style="color: var(--text-muted); font-size: 1rem"
+            >
+              استعرض جميع المحتويات الخاصة بهذه المادة
+            </p>
+            <div
+              style="
+                margin-top: 20px;
+                display: flex;
+                gap: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+              "
+            >
+              <div
+                class="date-chip"
+                style="background: rgba(59, 130, 246, 0.1)"
+              >
+                <i class="fas fa-file-pdf"></i>
+                <span id="filesCount">0</span> ملف
+              </div>
+              <div class="date-chip" style="background: rgba(239, 68, 68, 0.1)">
+                <i class="fas fa-video"></i>
+                <span id="videosCount">0</span> محاضرة
+              </div>
+              <div
+                class="date-chip"
+                style="background: rgba(16, 185, 129, 0.1)"
+              >
+                <i class="fas fa-graduation-cap"></i>
+                <span id="examsCount">0</span> امتحان
+              </div>
+            </div>
+          </section>
+
+          <!-- قسم الملفات (PDF) -->
+          <div class="content-section" id="filesSection" style="display: none">
+            <h2 class="section-title animate__animated animate__fadeInUp">
+              <i class="fas fa-file-pdf"></i> الملفات والملازم
+            </h2>
+            <div class="content-grid" id="filesGrid"></div>
+          </div>
+
+          <!-- قسم الفيديوهات -->
+          <div class="content-section" id="videosSection" style="display: none">
+            <h2
+              class="section-title animate__animated animate__fadeInUp"
+              style="animation-delay: 0.1s"
+            >
+              <i class="fas fa-video"></i> المحاضرات المرئية
+            </h2>
+            <div class="content-grid" id="videosGrid"></div>
+          </div>
+
+          <!-- قسم الامتحانات -->
+          <div class="content-section" id="examsSection" style="display: none">
+            <h2
+              class="section-title animate__animated animate__fadeInUp"
+              style="animation-delay: 0.2s"
+            >
+              <i class="fas fa-graduation-cap"></i> الامتحانات والاختبارات
+            </h2>
+            <div class="content-grid" id="examsGrid"></div>
+          </div>
+
+          <!-- رسالة عدم وجود محتوى -->
+          <div
+            id="emptyState"
+            class="empty-state animate__animated animate__fadeIn"
+            style="display: none"
+          >
+            <i class="fas fa-inbox"></i>
+            <h2>لا يوجد محتوى متاح حالياً</h2>
+            <p>لم يتم رفع أي ملفات أو محاضرات لهذه المادة بعد</p>
+            <a
+              href="index.html"
+              class="btn-card"
+              style="margin-top: 20px; display: inline-block"
+            >
+              العودة للرئيسية
+            </a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <script>
+      /* =========================================
+           إعدادات Firebase
+           ========================================= */
+      const firebaseConfig = {
+        apiKey: "AIzaSyA4_aX-sRYpzZITrt0fF82ONoeb4d71GUA",
+        authDomain: "maath-library-2026.firebaseapp.com",
+        projectId: "maath-library-2026",
+        storageBucket: "maath-library-2026.firebasestorage.app",
+        messagingSenderId: "667101666048",
+        appId: "1:667101666048:web:220bcfef7157c9b369b1e5",
+      };
+
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      const db = firebase.firestore();
+
+      /* =========================================
+           قاموس معلومات المواد
+           ========================================= */
+      const subjectsInfo = {
+        edu_presentations: {
+          name: "العروض التعليمية (اختياري)",
+          icon: "fa-presentation",
+          color: "#9333ea",
+          desc: "إنشاء وتصميم العروض التقديمية الفعالة",
+        },
+        psych_intro: {
+          name: "مدخل إلى العلوم النفسية",
+          icon: "fa-brain",
+          color: "#ec4899",
+          desc: "أساسيات علم النفس والسلوك الإنساني",
+        },
+        teaching_methods: {
+          name: "طرق تدريس عامة",
+          icon: "fa-chalkboard-teacher",
+          color: "#22c55e",
+          desc: "استراتيجيات وأساليب التدريس الحديثة",
+        },
+        info_systems: {
+          name: "نظم تداول المعلومات",
+          icon: "fa-network-wired",
+          color: "#3b82f6",
+          desc: "إدارة وتنظيم المعلومات الرقمية",
+        },
+        "2d_graphics": {
+          name: "تصميم رسومات ثنائية الأبعاد",
+          icon: "fa-palette",
+          color: "#f59e0b",
+          desc: "التصميم الجرافيكي والمحتوى البصري",
+        },
+        audio_programs: {
+          name: "البرامج الصوتية",
+          icon: "fa-headphones-alt",
+          color: "#8b5cf6",
+          desc: "تحرير ومعالجة الملفات الصوتية",
+        },
+        operating_systems: {
+          name: "نظم التشغيل",
+          icon: "fa-server",
+          color: "#10b981",
+          desc: "أساسيات أنظمة التشغيل والإدارة",
+        },
+        digital_design: {
+          name: "برامج تصميم المحتوى الرقمي",
+          icon: "fa-paint-brush",
+          color: "#d946ef",
+          desc: "أدوات التصميم والإنتاج الرقمي",
+        },
+      };
+
+      let currentSubject = "";
+      let allContent = { files: [], videos: [], exams: [] };
+
+      /* =========================================
+           الحصول على معرف المادة من الرابط
+           ========================================= */
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        currentSubject = urlParams.get("sub");
+
+        if (!currentSubject || !subjectsInfo[currentSubject]) {
+          window.location.href = "index.html";
+          return;
+        }
+
+        // تحديث معلومات المادة في الصفحة
+        updateSubjectHeader();
+
+        // جلب محتوى المادة
+        loadSubjectContent();
+
+        // تفعيل البحث
+        document
+          .getElementById("searchInput")
+          .addEventListener("input", handleSearch);
+
+        // تفعيل القائمة الجانبية للموبايل
+        setupMobileMenu();
+      });
+
+      /* =========================================
+           تحديث رأس الصفحة
+           ========================================= */
+      function updateSubjectHeader() {
+        const subject = subjectsInfo[currentSubject];
+
+        document.getElementById("subjectTitle").textContent = subject.name;
+        document.getElementById("subjectDesc").textContent = subject.desc;
+
+        const iconDiv = document.getElementById("subjectIcon");
+        iconDiv.style.background = subject.color;
+        iconDiv.innerHTML = `<i class="fas ${subject.icon}"></i>`;
+
+        // تحديث عنوان الصفحة
+        document.title = `${subject.name} | منصة تكنولوجيا التعليم 2026`;
+      }
+
+      /* =========================================
+           جلب محتوى المادة
+           ========================================= */
+      function loadSubjectContent() {
+        db.collection("files")
+          .where("subject", "==", currentSubject)
+          .onSnapshot((snapshot) => {
+            // إعادة تعيين المصفوفات
+            allContent = { files: [], videos: [], exams: [] };
+
+            snapshot.forEach((doc) => {
+              const data = { id: doc.id, ...doc.data() };
+
+              // تصنيف المحتوى حسب النوع
+              if (data.type === "files") {
+                allContent.files.push(data);
+              } else if (data.type === "videos") {
+                allContent.videos.push(data);
+              } else if (data.type === "exams") {
+                allContent.exams.push(data);
+              }
+            });
+
+            // تحديث العدادات
+            document.getElementById("filesCount").textContent =
+              allContent.files.length;
+            document.getElementById("videosCount").textContent =
+              allContent.videos.length;
+            document.getElementById("examsCount").textContent =
+              allContent.exams.length;
+
+            // عرض المحتوى
+            displayContent();
+
+            // إخفاء شاشة التحميل
+            const loader = document.getElementById("loadingOverlay");
+            if (loader) loader.style.display = "none";
+          });
+      }
+
+      /* =========================================
+           عرض المحتوى
+           ========================================= */
+      function displayContent() {
+        const totalContent =
+          allContent.files.length +
+          allContent.videos.length +
+          allContent.exams.length;
+
+        if (totalContent === 0) {
+          document.getElementById("emptyState").style.display = "block";
+          document.getElementById("filesSection").style.display = "none";
+          document.getElementById("videosSection").style.display = "none";
+          document.getElementById("examsSection").style.display = "none";
+          return;
+        }
+
+        document.getElementById("emptyState").style.display = "none";
+
+        // عرض الملفات
+        if (allContent.files.length > 0) {
+          document.getElementById("filesSection").style.display = "block";
+          renderFiles();
+        } else {
+          document.getElementById("filesSection").style.display = "none";
+        }
+
+        // عرض الفيديوهات
+        if (allContent.videos.length > 0) {
+          document.getElementById("videosSection").style.display = "block";
+          renderVideos();
+        } else {
+          document.getElementById("videosSection").style.display = "none";
+        }
+
+        // عرض الامتحانات
+        if (allContent.exams.length > 0) {
+          document.getElementById("examsSection").style.display = "block";
+          renderExams();
+        } else {
+          document.getElementById("examsSection").style.display = "none";
+        }
+      }
+
+      /* =========================================
+           رسم الملفات
+           ========================================= */
+      function renderFiles() {
+        const grid = document.getElementById("filesGrid");
+        grid.innerHTML = "";
+
+        allContent.files.forEach((file) => {
+          const card = document.createElement("div");
+          card.className = "content-card animate__animated animate__fadeInUp";
+          card.innerHTML = `
+                    <span class="type-badge badge-file">ملف PDF</span>
+                    <h3 style="font-size: 1.1rem; margin: 10px 0; color: white;">${file.name}</h3>
+                    <a href="${file.url}" target="_blank" class="btn-card" style="margin-top: 15px; display: block; text-align: center;">
+                        <i class="fas fa-download"></i> تحميل الملف
+                    </a>
+                `;
+          grid.appendChild(card);
+        });
+      }
+
+      /* =========================================
+           رسم الفيديوهات
+           ========================================= */
+      function renderVideos() {
+        const grid = document.getElementById("videosGrid");
+        grid.innerHTML = "";
+
+        allContent.videos.forEach((video) => {
+          const card = document.createElement("div");
+          card.className = "content-card animate__animated animate__fadeInUp";
+          card.innerHTML = `
+                    <span class="type-badge badge-video">محاضرة مسجلة</span>
+                    <h3 style="font-size: 1.1rem; margin: 10px 0; color: white;">${video.name}</h3>
+                    <a href="${video.url}" target="_blank" class="btn-card" style="margin-top: 15px; display: block; text-align: center; background: #ef4444; border-color: #ef4444;">
+                        <i class="fas fa-play"></i> مشاهدة المحاضرة
+                    </a>
+                `;
+          grid.appendChild(card);
+        });
+      }
+
+      /* =========================================
+           رسم الامتحانات
+           ========================================= */
+      function renderExams() {
+        const grid = document.getElementById("examsGrid");
+        grid.innerHTML = "";
+
+        allContent.exams.forEach((exam) => {
+          const card = document.createElement("div");
+          card.className = "content-card animate__animated animate__fadeInUp";
+          card.innerHTML = `
+                    <span class="type-badge badge-exam">اختبار إلكتروني</span>
+                    <h3 style="font-size: 1.1rem; margin: 10px 0; color: white;">${exam.name}</h3>
+                    <a href="${exam.url}" target="_blank" class="btn-card" style="margin-top: 15px; display: block; text-align: center; background: #10b981; border-color: #10b981;">
+                        <i class="fas fa-pen"></i> ابدأ الاختبار
+                    </a>
+                `;
+          grid.appendChild(card);
+        });
+      }
+
+      /* =========================================
+           البحث في المحتوى
+           ========================================= */
+      function handleSearch(e) {
+        const term = e.target.value.toLowerCase();
+
+        if (!term) {
+          displayContent();
+          return;
+        }
+
+        const filteredContent = {
+          files: allContent.files.filter((f) =>
+            f.name.toLowerCase().includes(term),
+          ),
+          videos: allContent.videos.filter((v) =>
+            v.name.toLowerCase().includes(term),
+          ),
+          exams: allContent.exams.filter((ex) =>
+            ex.name.toLowerCase().includes(term),
+          ),
+        };
+
+        allContent = filteredContent;
+        displayContent();
+      }
+
+      /* =========================================
+           تفعيل القائمة الجانبية للموبايل
+           ========================================= */
+      function setupMobileMenu() {
+        const menuToggle = document.getElementById("menuToggle");
+        const sidebar = document.getElementById("sidebar");
+
+        if (menuToggle && sidebar) {
+          menuToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
