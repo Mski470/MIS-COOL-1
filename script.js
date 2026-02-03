@@ -204,7 +204,7 @@ function loadSchedules() {
           schedulesContainer.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 30px; color: var(--text-muted);">
               <i class="fas fa-calendar-times" style="font-size: 2rem; margin-bottom: 10px;"></i>
-              <p>لا توجد جداول محدثة حالياً 📆</p>
+              <p>مفيش جداول  لغايت الوقت</p>
               <small style="font-size: 0.85rem; opacity: 0.7;">سيتم إضافة الجداول قريباً</small>
             </div>`;
           return;
@@ -272,7 +272,7 @@ function loadRecentUploads() {
         if (snapshot.empty) {
           console.log("ℹ️ لا توجد إضافات حديثة");
           recentContainer.innerHTML =
-            '<p style="text-align:center; color:var(--text-muted); padding:20px;">لا توجد تحديثات جديدة اليوم 🌟</p>';
+            '<p style="text-align:center; color:var(--text-muted); padding:20px;">لا توجد تحديثات جديدة اليوم </p>';
           return;
         }
 
@@ -502,7 +502,6 @@ class ParticleSystem {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
   }
-
   init() {
     for (let i = 0; i < this.particleCount; i++) {
       this.particles.push({

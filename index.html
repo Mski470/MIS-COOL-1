@@ -230,26 +230,38 @@
               </a>
               <ul class="submenu" id="subjectsMenu">
                 <li>
-                  <a href="subject.html?sub=tech_edu">تكنولوجيا التعليم</a>
-                </li>
-                <li><a href="subject.html?sub=cs_intro">علوم الحاسب</a></li>
-                <li>
-                  <a href="subject.html?sub=digital_photo">التصوير الرقمي</a>
+                  <a href="subject.html?sub=edu_presentations"
+                    >العروض التعليمية (اختياري)</a
+                  >
                 </li>
                 <li>
-                  <a href="subject.html?sub=learning_res">مصادر التعلم</a>
+                  <a href="subject.html?sub=psych_intro"
+                    >مدخل إلى العلوم النفسية</a
+                  >
                 </li>
                 <li>
-                  <a href="subject.html?sub=comm_skills">مهارات التواصل</a>
+                  <a href="subject.html?sub=teaching_methods">طرق تدريس عامة</a>
                 </li>
                 <li>
-                  <a href="subject.html?sub=edu_science">العلوم التربوية</a>
+                  <a href="subject.html?sub=info_systems"
+                    >نظم تداول المعلومات</a
+                  >
                 </li>
                 <li>
-                  <a href="subject.html?sub=curriculum">المناهج وتنظيمها</a>
+                  <a href="subject.html?sub=2d_graphics"
+                    >تصميم رسومات ثنائية الأبعاد</a
+                  >
                 </li>
                 <li>
-                  <a href="subject.html?sub=social_issues">قضايا مجتمعية</a>
+                  <a href="subject.html?sub=audio_programs">البرامج الصوتية</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=operating_systems">نظم التشغيل</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=digital_design"
+                    >برامج تصميم المحتوى الرقمي</a
+                  >
                 </li>
               </ul>
             </li>
@@ -283,7 +295,7 @@
         </nav>
 
         <div class="sidebar-footer">
-          <p>الإصدار 2.0</p>
+          <p>اصدار تجريبي قابل للتطوير 1.0 @MA</p>
         </div>
       </aside>
 
@@ -362,24 +374,23 @@
           </div>
 
           <section class="quick-grid" id="subjectsGrid">
-            <!-- تكنولوجيا التعليم -->
+            <!-- العروض التعليمية (اختياري) -->
             <div
               class="stat-card animate__animated animate__fadeInUp"
-              onclick="window.location.href = 'subject.html?sub=tech_edu'"
+              onclick="
+                window.location.href = 'subject.html?sub=edu_presentations'
+              "
               style="cursor: pointer"
             >
               <div
                 class="card-icon"
-                style="
-                  background: rgba(59, 130, 246, 0.1);
-                  color: var(--primary-blue);
-                "
+                style="background: rgba(147, 51, 234, 0.1); color: #9333ea"
               >
-                <i class="fas fa-laptop-code"></i>
+                <i class="fas fa-presentation"></i>
               </div>
               <div class="card-info">
-                <h3>تكنولوجيا التعليم</h3>
-                <p>أحدث المحاضرات والوسائط الرقمية</p>
+                <h3>العروض التعليمية (اختياري)</h3>
+                <p>إنشاء وتصميم العروض التقديمية الفعالة</p>
                 <span
                   class="btn-card"
                   style="display: inline-block; margin-top: 10px"
@@ -389,96 +400,21 @@
               </div>
             </div>
 
-            <!-- علوم الحاسب -->
+            <!-- مدخل إلى العلوم النفسية -->
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.1s; cursor: pointer"
-              onclick="window.location.href = 'subject.html?sub=cs_intro'"
-            >
-              <div
-                class="card-icon"
-                style="
-                  background: rgba(16, 185, 129, 0.1);
-                  color: var(--accent-color);
-                "
-              >
-                <i class="fas fa-microchip"></i>
-              </div>
-              <div class="card-info">
-                <h3>علوم الحاسب</h3>
-                <p>أساسيات البرمجة ونظم التشغيل</p>
-                <span
-                  class="btn-card"
-                  style="display: inline-block; margin-top: 10px"
-                >
-                  تصفح المادة <i class="fas fa-arrow-left"></i>
-                </span>
-              </div>
-            </div>
-
-            <!-- التصوير الرقمي -->
-            <div
-              class="stat-card animate__animated animate__fadeInUp"
-              style="animation-delay: 0.2s; cursor: pointer"
-              onclick="window.location.href = 'subject.html?sub=digital_photo'"
-            >
-              <div
-                class="card-icon"
-                style="background: rgba(245, 158, 11, 0.1); color: #f59e0b"
-              >
-                <i class="fas fa-camera-retro"></i>
-              </div>
-              <div class="card-info">
-                <h3>التصوير الرقمي</h3>
-                <p>فنون التصوير والإخراج البصري</p>
-                <span
-                  class="btn-card"
-                  style="display: inline-block; margin-top: 10px"
-                >
-                  تصفح المادة <i class="fas fa-arrow-left"></i>
-                </span>
-              </div>
-            </div>
-
-            <!-- مصادر التعلم -->
-            <div
-              class="stat-card animate__animated animate__fadeInUp"
-              style="animation-delay: 0.3s; cursor: pointer"
-              onclick="window.location.href = 'subject.html?sub=learning_res'"
-            >
-              <div
-                class="card-icon"
-                style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6"
-              >
-                <i class="fas fa-book-reader"></i>
-              </div>
-              <div class="card-info">
-                <h3>مصادر التعلم</h3>
-                <p>المكتبات الرقمية والمراجع التعليمية</p>
-                <span
-                  class="btn-card"
-                  style="display: inline-block; margin-top: 10px"
-                >
-                  تصفح المادة <i class="fas fa-arrow-left"></i>
-                </span>
-              </div>
-            </div>
-
-            <!-- مهارات التواصل -->
-            <div
-              class="stat-card animate__animated animate__fadeInUp"
-              style="animation-delay: 0.4s; cursor: pointer"
-              onclick="window.location.href = 'subject.html?sub=comm_skills'"
+              onclick="window.location.href = 'subject.html?sub=psych_intro'"
             >
               <div
                 class="card-icon"
                 style="background: rgba(236, 72, 153, 0.1); color: #ec4899"
               >
-                <i class="fas fa-comments"></i>
+                <i class="fas fa-brain"></i>
               </div>
               <div class="card-info">
-                <h3>مهارات التواصل</h3>
-                <p>فنون الإلقاء والعرض التقديمي</p>
+                <h3>مدخل إلى العلوم النفسية</h3>
+                <p>أساسيات علم النفس والسلوك الإنساني</p>
                 <span
                   class="btn-card"
                   style="display: inline-block; margin-top: 10px"
@@ -488,21 +424,23 @@
               </div>
             </div>
 
-            <!-- العلوم التربوية -->
+            <!-- طرق تدريس عامة -->
             <div
               class="stat-card animate__animated animate__fadeInUp"
-              style="animation-delay: 0.5s; cursor: pointer"
-              onclick="window.location.href = 'subject.html?sub=edu_science'"
+              style="animation-delay: 0.2s; cursor: pointer"
+              onclick="
+                window.location.href = 'subject.html?sub=teaching_methods'
+              "
             >
               <div
                 class="card-icon"
                 style="background: rgba(34, 197, 94, 0.1); color: #22c55e"
               >
-                <i class="fas fa-graduation-cap"></i>
+                <i class="fas fa-chalkboard-teacher"></i>
               </div>
               <div class="card-info">
-                <h3>العلوم التربوية</h3>
-                <p>نظريات التعلم والتطوير التربوي</p>
+                <h3>طرق تدريس عامة</h3>
+                <p>استراتيجيات وأساليب التدريس الحديثة</p>
                 <span
                   class="btn-card"
                   style="display: inline-block; margin-top: 10px"
@@ -512,21 +450,95 @@
               </div>
             </div>
 
-            <!-- المناهج وتنظيمها -->
+            <!-- نظم تداول المعلومات -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.3s; cursor: pointer"
+              onclick="window.location.href = 'subject.html?sub=info_systems'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(59, 130, 246, 0.1); color: #3b82f6"
+              >
+                <i class="fas fa-network-wired"></i>
+              </div>
+              <div class="card-info">
+                <h3>نظم تداول المعلومات</h3>
+                <p>إدارة وتنظيم المعلومات الرقمية</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- تصميم رسومات ثنائية الأبعاد -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.4s; cursor: pointer"
+              onclick="window.location.href = 'subject.html?sub=2d_graphics'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(245, 158, 11, 0.1); color: #f59e0b"
+              >
+                <i class="fas fa-palette"></i>
+              </div>
+              <div class="card-info">
+                <h3>تصميم رسومات ثنائية الأبعاد</h3>
+                <p>التصميم الجرافيكي والمحتوى البصري</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- البرامج الصوتية -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.5s; cursor: pointer"
+              onclick="window.location.href = 'subject.html?sub=audio_programs'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6"
+              >
+                <i class="fas fa-headphones-alt"></i>
+              </div>
+              <div class="card-info">
+                <h3>البرامج الصوتية</h3>
+                <p>تحرير ومعالجة الملفات الصوتية</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- نظم التشغيل -->
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.6s; cursor: pointer"
-              onclick="window.location.href = 'subject.html?sub=curriculum'"
+              onclick="
+                window.location.href = 'subject.html?sub=operating_systems'
+              "
             >
               <div
                 class="card-icon"
-                style="background: rgba(251, 146, 60, 0.1); color: #fb923c"
+                style="background: rgba(16, 185, 129, 0.1); color: #10b981"
               >
-                <i class="fas fa-stream"></i>
+                <i class="fas fa-server"></i>
               </div>
               <div class="card-info">
-                <h3>المناهج وتنظيمها</h3>
-                <p>تصميم وتطوير المناهج الدراسية</p>
+                <h3>نظم التشغيل</h3>
+                <p>أساسيات أنظمة التشغيل والإدارة</p>
                 <span
                   class="btn-card"
                   style="display: inline-block; margin-top: 10px"
@@ -536,21 +548,21 @@
               </div>
             </div>
 
-            <!-- قضايا مجتمعية -->
+            <!-- برامج تصميم المحتوى الرقمي -->
             <div
               class="stat-card animate__animated animate__fadeInUp"
               style="animation-delay: 0.7s; cursor: pointer"
-              onclick="window.location.href = 'subject.html?sub=social_issues'"
+              onclick="window.location.href = 'subject.html?sub=digital_design'"
             >
               <div
                 class="card-icon"
-                style="background: rgba(20, 184, 166, 0.1); color: #14b8a6"
+                style="background: rgba(217, 70, 239, 0.1); color: #d946ef"
               >
-                <i class="fas fa-users"></i>
+                <i class="fas fa-paint-brush"></i>
               </div>
               <div class="card-info">
-                <h3>قضايا مجتمعية</h3>
-                <p>التعليم والمسؤولية الاجتماعية</p>
+                <h3>برامج تصميم المحتوى الرقمي</h3>
+                <p>أدوات التصميم والإنتاج الرقمي</p>
                 <span
                   class="btn-card"
                   style="display: inline-block; margin-top: 10px"
