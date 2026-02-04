@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>الجدول الدراسي | منصة تكنولوجيا التعليم 2026</title>
+    <meta
+      name="description"
+      content="عرض جداول المحاضرات - تكنولوجيا التعليم 2026"
+    />
+    <title>جداول الفرقة الأولى | تكنولوجيا التعليم</title>
 
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,691 +16,244 @@
       rel="stylesheet"
     />
 
-    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-    <!-- Animate.css -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
 
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="style.css" />
-
     <style>
-      /* ستايل حصري لصفحة الجدول */
       :root {
-        --sch-purple: #8b5cf6;
-        --sch-dark-purple: #4c1d95;
-        --sch-glass: rgba(30, 41, 59, 0.7);
+        --primary-color: #6366f1;
+        --secondary-color: #a855f7;
+        --bg-dark: #0f172a;
+        --card-bg: #1e293b;
+        --text-main: #f8fafc;
+        --accent-color: #22d3ee;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Tajawal", sans-serif;
       }
 
       body {
-        background-color: #0f172a;
-        color: #f8fafc;
-        font-family: "Tajawal", sans-serif;
-        margin: 0;
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        line-height: 1.6;
+        overflow-x: hidden;
       }
 
-      .schedule-wrapper {
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-      }
-
-      .schedule-card {
-        background: var(--sch-glass);
-        backdrop-filter: blur(10px);
-        border-radius: 30px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        overflow: hidden;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      }
-
-      /* ستايل الجدول الاحترافي */
-      .schedule-table {
-        width: 100%;
-        border-collapse: separate;
-        border-spacing: 0 12px;
-        margin-top: 20px;
-      }
-
-      .schedule-table th {
-        padding: 20px;
-        text-align: right;
-        color: var(--sch-purple);
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-size: 0.95rem;
-        border-bottom: 2px solid rgba(139, 92, 246, 0.3);
-      }
-
-      .schedule-table td {
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.03);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .schedule-table td:first-child {
-        border-radius: 0 15px 15px 0;
-      }
-
-      .schedule-table td:last-child {
-        border-radius: 15px 0 0 15px;
-      }
-
-      .schedule-table tr:hover td {
-        background: rgba(139, 92, 246, 0.1);
-        transform: scale(1.01);
-        color: #fff;
-      }
-
-      .day-badge {
-        background: linear-gradient(
-          45deg,
-          var(--sch-purple),
-          var(--sch-dark-purple)
-        );
-        color: white;
-        padding: 6px 15px;
-        border-radius: 10px;
-        font-weight: bold;
-        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-      }
-
-      .time-cell {
-        direction: ltr;
-        font-family: "Courier New", monospace;
-        font-weight: bold;
-        color: #10b981;
-      }
-
-      /* ستايلات الحالات (مباشر / مسجل) */
-      .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 8px 16px;
-        border-radius: 50px;
-        font-size: 0.85rem;
-        font-weight: 700;
-      }
-
-      .status-live {
-        background: rgba(239, 68, 68, 0.1);
-        color: #ef4444;
-        border: 1px solid rgba(239, 68, 68, 0.2);
-      }
-
-      .status-live i {
-        animation: pulse-red 1.5s infinite;
-      }
-
-      .status-recorded {
-        background: rgba(59, 130, 246, 0.1);
-        color: #3b82f6;
-        border: 1px solid rgba(59, 130, 246, 0.2);
-      }
-
-      @keyframes pulse-red {
-        0%,
-        100% {
-          transform: scale(0.9);
-          opacity: 0.7;
-        }
-        50% {
-          transform: scale(1.2);
-          opacity: 1;
-        }
-      }
-
-      /* ستايل قسم محاضرات الغد */
-      .tomorrow-lecture-card {
-        background: linear-gradient(
-          135deg,
-          rgba(16, 185, 129, 0.1),
-          rgba(5, 150, 105, 0.05)
-        );
-        border: 2px solid rgba(16, 185, 129, 0.3);
-        border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .tomorrow-lecture-card::before {
-        content: "";
-        position: absolute;
+      /* شريط التقدم العلوي */
+      #progressBar {
+        position: fixed;
         top: 0;
-        left: 0;
-        width: 5px;
-        height: 100%;
-        background: linear-gradient(180deg, #10b981, #059669);
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          to left,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        width: 0%;
+        z-index: 1000;
+        transition: width 0.2s ease;
       }
 
-      .tomorrow-lecture-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(16, 185, 129, 0.3);
-        border-color: #10b981;
+      /* الهيدر */
+      header {
+        padding: 3rem 1rem;
+        text-align: center;
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 2rem;
       }
 
-      .tomorrow-lecture-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
-        gap: 15px;
+      .header-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(to right, #818cf8, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
-      .tomorrow-subject {
-        font-size: 1.3rem;
-        font-weight: bold;
-        color: #10b981;
-        margin: 0;
-      }
-
-      .tomorrow-time {
+      .header-content p {
+        color: #94a3b8;
         font-size: 1.1rem;
-        color: #fbbf24;
-        font-weight: 600;
-        direction: ltr;
-        display: flex;
-        align-items: center;
-        gap: 8px;
       }
 
-      .tomorrow-link {
-        display: inline-flex;
+      /* حاوية الصور */
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 1.5rem 5rem;
+      }
+
+      .image-card {
+        background: var(--card-bg);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+      }
+
+      .image-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .image-header {
+        padding: 1rem 1.5rem;
+        background: rgba(255, 255, 255, 0.02);
+        display: flex;
         align-items: center;
         gap: 10px;
-        background: linear-gradient(135deg, #10b981, #059669);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .image-header i {
+        color: var(--accent-color);
+      }
+
+      .schedule-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        cursor: pointer;
+        transition: opacity 0.3s;
+      }
+
+      .schedule-img:hover {
+        opacity: 0.9;
+      }
+
+      /* زر الرجوع للأعلى */
+      #backToTop {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--primary-color);
         color: white;
-        padding: 12px 25px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        margin-top: 15px;
-      }
-
-      .tomorrow-link:hover {
-        background: linear-gradient(135deg, #059669, #047857);
-        transform: translateX(-5px);
-        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
-      }
-
-      .no-lectures {
-        text-align: center;
-        padding: 40px;
-        color: #94a3b8;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
         font-size: 1.2rem;
+        box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        z-index: 100;
+        transition: all 0.3s ease;
       }
 
-      .no-lectures i {
-        font-size: 3rem;
-        margin-bottom: 15px;
-        opacity: 0.5;
+      #backToTop.show {
+        display: flex;
+        animation: fadeInUp 0.5s;
       }
 
-      /* تحسينات الموبايل */
-      @media (max-width: 992px) {
-        .schedule-table thead {
-          display: none;
-        }
+      footer {
+        text-align: center;
+        padding: 2rem;
+        color: #64748b;
+        font-size: 0.9rem;
+      }
 
-        .schedule-table td {
-          display: block;
-          text-align: left;
-          padding-left: 50%;
-          position: relative;
-          border-radius: 0 !important;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      /* تحسينات الشاشات الصغيرة */
+      @media (max-width: 768px) {
+        .header-content h1 {
+          font-size: 1.8rem;
         }
-
-        .schedule-table td::before {
-          content: attr(data-label);
-          position: absolute;
-          right: 20px;
-          font-weight: bold;
-          color: var(--sch-purple);
+        .container {
+          padding: 0 1rem 3rem;
         }
       }
     </style>
   </head>
   <body>
-    <div class="app-container">
-      <!-- القائمة الجانبية -->
-      <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-          <div
-            class="logo-icon"
-            style="
-              background: var(--sch-purple);
-              box-shadow: 0 0 20px var(--sch-purple);
-            "
-          >
-            <i class="fas fa-calendar-alt"></i>
-          </div>
-          <h2>جدول 2026</h2>
+    <div id="progressBar"></div>
+
+    <header class="animate__animated animate__fadeInDown">
+      <div class="header-content">
+        <h1><i class="fa-solid fa-calendar-days"></i> جداول المحاضرات</h1>
+        <p>الفرقة الأولى - تكنولوجيا التعليم 2026</p>
+      </div>
+    </header>
+
+    <div class="container">
+      <div
+        class="image-card animate__animated animate__fadeInUp"
+        style="animation-delay: 0.2s"
+      >
+        <div class="image-header">
+          <i class="fa-solid fa-image"></i>
+          <span>الجدول الدراسي - الجزء الأول</span>
         </div>
-        <nav class="sidebar-nav">
-          <ul>
-            <li>
-              <a href="index.html" class="nav-link"
-                ><i class="fas fa-home"></i><span>الرئيسية</span></a
-              >
-            </li>
+        <img
+          src="WhatsApp Image 2026-02-02 at 11.55.29 PM.jpeg"
+          alt="جدول المحاضرات 1"
+          class="schedule-img"
+          onclick="window.open(this.src)"
+        />
+      </div>
 
-            <li class="active">
-              <a href="schedule.html" class="nav-link"
-                ><i class="fas fa-clock"></i><span>الجدول</span></a
-              >
-            </li>
-          </ul>
-        </nav>
-      </aside>
-
-      <!-- المحتوى الرئيسي -->
-      <main class="main-wrapper">
-        <!-- الشريط العلوي -->
-        <header class="top-navbar">
-          <div class="header-left">
-            <button class="menu-btn" id="menuToggle">
-              <i class="fas fa-bars"></i>
-            </button>
-          </div>
-          <div class="header-right">
-            <div class="date-chip">
-              <span>أهلاً بكم في جدولكم الدراسي</span>
-              <div class="avatar"><i class="fas fa-user-graduate"></i></div>
-            </div>
-          </div>
-        </header>
-
-        <!-- محتوى الصفحة -->
-        <div class="content-body">
-          <div class="schedule-wrapper">
-            <div class="section-title animate__animated animate__fadeInDown">
-              <h1
-                style="
-                  color: var(--sch-purple);
-                  font-size: 2.2rem;
-                  margin-bottom: 10px;
-                "
-              >
-                <i class="fas fa-calendar-check"></i> تنظيم الوقت الدراسي
-              </h1>
-              <p style="color: #94a3b8">مواعيد المحاضرات</p>
-            </div>
-
-            <div class="schedule-card animate__animated animate__fadeInUp">
-              <table class="schedule-table">
-                <thead>
-                  <tr>
-                    <th>اليوم</th>
-                    <th>المادة الدراسية</th>
-                    <th>الوقت</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody id="scheduleTableBody">
-                  <!-- سيتم ملؤها بـ JavaScript -->
-                </tbody>
-              </table>
-            </div>
-
-            <!-- قسم محاضرات الغد -->
-            <div
-              class="section-title animate__animated animate__fadeInDown"
-              style="margin-top: 50px"
-            >
-              <h2
-                style="color: #10b981; font-size: 1.8rem; margin-bottom: 10px"
-              >
-                <i class="fas fa-calendar-day"></i> محاضرات الغد
-              </h2>
-              <p style="color: #94a3b8" id="tomorrowDateDisplay">
-                <!-- سيتم ملؤها بـ JavaScript -->
-              </p>
-            </div>
-
-            <div
-              class="schedule-card animate__animated animate__fadeInUp"
-              id="tomorrowSection"
-            >
-              <div id="tomorrowLectures">
-                <!-- سيتم ملؤها بـ JavaScript -->
-              </div>
-            </div>
-          </div>
+      <div
+        class="image-card animate__animated animate__fadeInUp"
+        style="animation-delay: 0.4s"
+      >
+        <div class="image-header">
+          <i class="fa-solid fa-image"></i>
+          <span>الجدول الدراسي - الجزء الثاني</span>
         </div>
-      </main>
+        <img
+          src="WhatsApp Image 2026-02-02 at 11.55.29 PM (1).jpeg"
+          alt="جدول المحاضرات 2"
+          class="schedule-img"
+          onclick="window.open(this.src)"
+        />
+      </div>
     </div>
 
+    <button id="backToTop" title="العودة للأعلى">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <footer>
+      <p></p>
+    </footer>
+
     <script>
-      /* =========================================
-           مصفوفة البيانات - جدول جامعة المنيا
-           قسم تكنولوجيا التعليم - الفصل الدراسي الثاني 2025/2026
-           ========================================= */
-      const mySchedule = [
-        // الأحد
-        {
-          day: "الأحد",
-          subject: "البرامج الصوتية (A)",
-          time: "09:00 - 10:00 AM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الأحد",
-          subject: "البرامج الصوتية (B)",
-          time: "10:00 - 11:00 AM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الأحد",
-          subject: "نظم تشغيل (A)",
-          time: "11:00 AM - 01:00 PM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الأحد",
-          subject: "نظم تشغيل (B)",
-          time: "01:00 - 03:00 PM",
-          type: "live",
-          link: "#",
-        },
+      // تحديث شريط التقدم عند التمرير
+      window.onscroll = function () {
+        const winScroll =
+          document.body.scrollTop || document.documentElement.scrollTop;
+        const height =
+          document.documentElement.scrollHeight -
+          document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progressBar").style.width = scrolled + "%";
 
-        // الاثنين
-        {
-          day: "الاثنين",
-          subject: "مدخل إلى العلوم النفسية (A)",
-          time: "09:00 - 11:00 AM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الاثنين",
-          subject: "المعلومات (A)",
-          time: "11:00 AM - 01:00 PM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الاثنين",
-          subject: "المعلومات (B)",
-          time: "01:00 - 03:00 PM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الاثنين",
-          subject: "مدخل إلى العلوم النفسية (B)",
-          time: "03:00 - 05:00 PM",
-          type: "live",
-          link: "#",
-        },
-
-        // الثلاثاء
-        {
-          day: "الثلاثاء",
-          subject: "ثنائية الأبعاد - تصميم رسومات (A)",
-          time: "11:00 AM - 01:00 PM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الثلاثاء",
-          subject: "ثنائية الأبعاد - تصميم رسومات (B)",
-          time: "01:00 - 03:00 PM",
-          type: "live",
-          link: "#",
-        },
-
-        // الأربعاء
-        {
-          day: "الأربعاء",
-          subject: "العروض التعليمية (نظري)",
-          time: "11:00 AM - 01:00 PM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الأربعاء",
-          subject: "العروض التعليمية (نظري)",
-          time: "01:00 - 03:00 PM",
-          type: "live",
-          link: "#",
-        },
-
-        // الخميس
-        {
-          day: "الخميس",
-          subject: "البرامج الصوتية (عملي)",
-          time: "09:00 - 11:00 AM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الخميس",
-          subject: "نظم تداول المعلومات",
-          time: "11:00 AM - 01:00 PM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الخميس",
-          subject: "البرامج الصوتية (عملي)",
-          time: "01:00 - 03:00 PM",
-          type: "live",
-          link: "#",
-        },
-        {
-          day: "الخميس",
-          subject: "نظم تداول المعلومات",
-          time: "03:00 - 05:00 PM",
-          type: "live",
-          link: "#",
-        },
-      ];
-
-      /* =========================================
-           عرض الجدول في الصفحة
-           ========================================= */
-      function renderMySchedule() {
-        const tableBody = document.getElementById("scheduleTableBody");
-        if (!tableBody) return;
-
-        tableBody.innerHTML = "";
-
-        mySchedule.forEach((item) => {
-          const isLive = item.type === "live";
-          const statusHTML = isLive
-            ? `<span class="status-badge status-live"><i class="fas fa-broadcast-tower"></i> </span>`
-            : `<span class="status-badge status-recorded"><i class="fas fa-play-circle"></i> محاضرة </span>`;
-
-          const row = `
-                    <tr>
-                        <td data-label="اليوم"><span class="day-badge">${item.day}</span></td>
-                        <td data-label="المادة">${item.subject}</td>
-                        <td data-label="الوقت" class="time-cell">${item.time}</td>
-                        <td data-label="الحالة">${statusHTML}</td>
-                        <td data-label="الرابط">
-                            <a href="${item.link}" class="nav-link" style="color:var(--sch-purple); font-weight:bold;">
-                                <i class="fas fa-external-link-alt"></i> تصفح
-                            </a>
-                        </td>
-                    </tr>
-                `;
-          tableBody.innerHTML += row;
-        });
-      }
-
-      /* =========================================
-           عرض محاضرات الغد
-           ========================================= */
-      function renderTomorrowLectures() {
-        const daysArabic = {
-          الأحد: 0,
-          الاثنين: 1,
-          الثلاثاء: 2,
-          الأربعاء: 3,
-          الخميس: 4,
-          الجمعة: 5,
-          السبت: 6,
-        };
-
-        const daysReverse = [
-          "الأحد",
-          "الاثنين",
-          "الثلاثاء",
-          "الأربعاء",
-          "الخميس",
-          "الجمعة",
-          "السبت",
-        ];
-
-        // الحصول على يوم الغد
-        const today = new Date();
-        const tomorrow = new Date(today);
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const tomorrowDayIndex = tomorrow.getDay();
-        const tomorrowDayName = daysReverse[tomorrowDayIndex];
-
-        // عرض التاريخ
-        const dateDisplay = document.getElementById("tomorrowDateDisplay");
-        const options = {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        };
-        const dateString = tomorrow.toLocaleDateString("ar-EG", options);
-        if (dateDisplay) {
-          dateDisplay.innerHTML = `${dateString}`;
+        // إظهار زر العودة للأعلى
+        const btn = document.getElementById("backToTop");
+        if (winScroll > 300) {
+          btn.classList.add("show");
+        } else {
+          btn.classList.remove("show");
         }
+      };
 
-        // فلترة محاضرات الغد
-        const tomorrowLectures = mySchedule.filter(
-          (item) => item.day === tomorrowDayName,
-        );
-
-        const lecturesContainer = document.getElementById("tomorrowLectures");
-        if (!lecturesContainer) return;
-
-        if (tomorrowLectures.length === 0) {
-          lecturesContainer.innerHTML = `
-            <div class="no-lectures">
-              <i class="fas fa-calendar-times"></i>
-              <p>لا توجد محاضرات مقررة في يوم ${tomorrowDayName}</p>
-              <p style="font-size: 0.9rem; margin-top: 10px;">استمتعي بيوم راحة! 🎉</p>
-            </div>
-          `;
-          return;
-        }
-
-        let lecturesHTML = "";
-        tomorrowLectures.forEach((lecture, index) => {
-          const isLive = lecture.type === "live";
-          const statusIcon = isLive ? "broadcast-tower" : "play-circle";
-          const statusText = isLive ? "" : "مسجلة";
-
-          lecturesHTML += `
-            <div class="tomorrow-lecture-card animate__animated animate__fadeInUp" style="animation-delay: ${index * 0.1}s">
-              <div class="tomorrow-lecture-header">
-                <h3 class="tomorrow-subject">
-                  <i class="fas fa-book-open"></i> ${lecture.subject}
-                </h3>
-                <span class="status-badge status-${isLive ? "live" : "recorded"}">
-                  <i class="fas fa-${statusIcon}"></i> ${statusText}
-                </span>
-              </div>
-              <div class="tomorrow-time">
-                <i class="fas fa-clock"></i>
-                <span>${lecture.time}</span>
-              </div>
-              <a href="${lecture.link}" class="tomorrow-link">
-                <i class="fas fa-external-link-alt"></i>
-                <span> </span>
-              </a>
-            </div>
-          `;
-        });
-
-        lecturesContainer.innerHTML = lecturesHTML;
-      }
-
-      /* =========================================
-           تفعيل القائمة الجانبية للموبايل
-           ========================================= */
-      document.addEventListener("DOMContentLoaded", () => {
-        const menuBtn = document.getElementById("menuToggle");
-        const sidebar = document.getElementById("sidebar");
-
-        if (menuBtn && sidebar) {
-          menuBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            sidebar.classList.toggle("active");
-          });
-
-          document.addEventListener("click", (e) => {
-            if (
-              sidebar.classList.contains("active") &&
-              !sidebar.contains(e.target) &&
-              e.target !== menuBtn
-            ) {
-              sidebar.classList.remove("active");
-            }
-          });
-        }
-
-        // تشغيل بناء الجدول
-        renderMySchedule();
-
-        // تشغيل عرض محاضرات الغد
-        renderTomorrowLectures();
-      });
+      // وظيفة العودة للأعلى
+      document.getElementById("backToTop").onclick = function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
     </script>
-
-    <style>
-      @media (max-width: 992px) {
-        .sidebar {
-          position: fixed;
-          right: -280px;
-          transition: all 0.4s ease;
-          z-index: 1000;
-        }
-        .sidebar.active {
-          right: 0;
-        }
-        .main-wrapper {
-          margin-right: 0 !important;
-          width: 100% !important;
-        }
-      }
-
-      /* تحسين شكل السكرول بار */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #0f172a;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: var(--sch-purple);
-        border-radius: 10px;
-      }
-    </style>
   </body>
 </html>
