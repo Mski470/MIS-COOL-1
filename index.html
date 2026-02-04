@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>منصة التنظيمية | الذكية</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- شاشة التحميل المتطورة -->
+    <div id="advancedLoader">
+      <canvas id="particlesCanvas"></canvas>
+      <div class="glow-effect"></div>
+
+      <div class="logo-container">
+        <svg
+          class="tech-logo"
+          viewBox="0 0 200 200"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M100 20 L160 50 L160 130 L100 180 L40 130 L40 50 Z"
+            fill="none"
+            stroke="#00f2ff"
+            stroke-width="2"
+            opacity="0.6"
+          />
+          <circle
+            cx="100"
+            cy="100"
+            r="60"
+            fill="none"
+            stroke="#7b68ee"
+            stroke-width="2"
+            class="pulse-circle"
+          />
+
+          <circle cx="85" cy="90" r="8" fill="#00f2ff">
+            <animate
+              attributeName="opacity"
+              values="1;0.3;1"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <circle cx="115" cy="90" r="8" fill="#00f2ff">
+            <animate
+              attributeName="opacity"
+              values="1;0.3;1"
+              dur="3s"
+              repeatCount="indefinite"
+            />
+          </circle>
+
+          <rect
+            x="90"
+            y="50"
+            width="20"
+            height="20"
+            fill="none"
+            stroke="#00f2ff"
+            stroke-width="1.5"
+          />
+          <line
+            x1="100"
+            y1="70"
+            x2="100"
+            y2="85"
+            stroke="#00f2ff"
+            stroke-width="1"
+          />
+
+          <line
+            x1="75"
+            y1="100"
+            x2="85"
+            y2="100"
+            stroke="#7b68ee"
+            stroke-width="1.5"
+          />
+          <line
+            x1="115"
+            y1="100"
+            x2="125"
+            y2="100"
+            stroke="#7b68ee"
+            stroke-width="1.5"
+          />
+
+          <circle cx="70" cy="100" r="3" fill="#00f2ff" />
+          <circle cx="130" cy="100" r="3" fill="#00f2ff" />
+
+          <path
+            d="M 60 120 Q 80 140 100 145"
+            fill="none"
+            stroke="#7b68ee"
+            stroke-width="1.5"
+          />
+          <path
+            d="M 140 120 Q 120 140 100 145"
+            fill="none"
+            stroke="#7b68ee"
+            stroke-width="1.5"
+          />
+        </svg>
+      </div>
+
+      <div class="brand-text">
+        <h1>MOAAZTECH</h1>
+        <p>Innovate. Dominate.</p>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+
+      <div class="loading-text">جاري التحميل...</div>
+    </div>
+
+    <!-- الإعلان المنبثق -->
+    <div class="announcement-overlay" id="announcementOverlay">
+      <div class="announcement-card animate__animated">
+        <i class="fas fa-bullhorn main-icon pulse-icon"></i>
+        <h2 id="announcementTitle">ملاحظة هامة</h2>
+        <p id="announcementText">جاري تحميل آخر التنبيهات...</p>
+        <button class="close-announcement" id="closeAnnouncement">
+          فهمت ذلك <i class="fas fa-check-circle" style="margin-right: 8px"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- الحاوية الرئيسية -->
+    <div class="app-container">
+      <!-- القائمة الجانبية -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-icon moaaztech-logo">
+            <svg
+              viewBox="0 0 200 200"
+              xmlns="http://www.w3.org/2000/svg"
+              style="width: 100%; height: 100%"
+            >
+              <path
+                d="M100 20 L160 50 L160 130 L100 180 L40 130 L40 50 Z"
+                fill="none"
+                stroke="#00f2ff"
+                stroke-width="2"
+                opacity="0.6"
+              />
+              <circle
+                cx="100"
+                cy="100"
+                r="60"
+                fill="none"
+                stroke="#7b68ee"
+                stroke-width="2"
+                class="pulse-circle"
+              />
+              <circle cx="85" cy="90" r="8" fill="#00f2ff">
+                <animate
+                  attributeName="opacity"
+                  values="1;0.3;1"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx="115" cy="90" r="8" fill="#00f2ff">
+                <animate
+                  attributeName="opacity"
+                  values="1;0.3;1"
+                  dur="3s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <rect
+                x="90"
+                y="50"
+                width="20"
+                height="20"
+                fill="none"
+                stroke="#00f2ff"
+                stroke-width="1.5"
+              />
+              <line
+                x1="100"
+                y1="70"
+                x2="100"
+                y2="85"
+                stroke="#00f2ff"
+                stroke-width="1"
+              />
+            </svg>
+          </div>
+          <h2> 2026</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+          <ul>
+            <li class="active">
+              <a href="index.html" class="nav-link">
+                <i class="fas fa-home"></i><span>الرئيسية</span>
+              </a>
+            </li>
+            <li class="has-submenu">
+              <a href="javascript:void(0)" class="nav-link" id="subjectsBtn">
+                <i class="fas fa-book-reader"></i><span>المواد الدراسية</span>
+                <i class="fas fa-chevron-down submenu-arrow"></i>
+              </a>
+              <ul class="submenu" id="subjectsMenu">
+                <li>
+                  <a href="subject.html?sub=edu_presentations"
+                    >العروض التعليمية (اختياري)</a
+                  >
+                </li>
+                <li>
+                  <a href="subject.html?sub=psych_intro"
+                    >مدخل إلى العلوم النفسية</a
+                  >
+                </li>
+                <li>
+                  <a href="subject.html?sub=teaching_methods">طرق تدريس عامة</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=info_systems"
+                    >نظم تداول المعلومات</a
+                  >
+                </li>
+                <li>
+                  <a href="subject.html?sub=2d_graphics"
+                    >تصميم رسومات ثنائية الأبعاد</a
+                  >
+                </li>
+                <li>
+                  <a href="subject.html?sub=audio_programs">البرامج الصوتية</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=operating_systems">نظم التشغيل</a>
+                </li>
+                <li>
+                  <a href="subject.html?sub=digital_design"
+                    >برامج تصميم المحتوى الرقمي</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#notesSection" class="nav-link highlight-link">
+                <i class="fas fa-bullhorn"></i><span>أهم الملاحظات</span>
+                <span class="badge-new">جديد</span>
+              </a>
+            </li>
+            <li>
+              <a href="#scheduleSection" class="nav-link">
+                <i class="fas fa-calendar-alt"></i><span>جداول المحاضرات</span>
+              </a>
+            </li>
+            <li>
+              
+            </li>
+            <li>
+        <div class="sidebar-footer">
+          <p>اصدار تجريبي قابل للتطوير 1.0 @MA</p>
+        </div>
+      </aside>
+
+      <!-- المحتوى الرئيسي -->
+      <main class="main-wrapper">
+        <!-- الشريط العلوي -->
+        <header class="top-navbar">
+          <div class="header-left">
+            <button class="menu-btn" id="menuToggle">
+              <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="ابحث عن ملزمة، فيديو، أو امتحان..."
+              />
+            </div>
+          </div>
+          <div class="header-right">
+            <div class="date-chip">
+              <i class="far fa-calendar-alt"></i>
+              <span id="currentDate">-- / -- / ----</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- محتوى الصفحة -->
+        <div class="content-body">
+          <!-- قسم الترحيب -->
+          <div
+            class="welcome-section animate__animated animate__fadeIn"
+            style="
+              background: linear-gradient(135deg, #1e293b, #0f172a);
+              padding: 40px;
+              border-radius: 20px;
+              margin-bottom: 30px;
+              text-align: center;
+            "
+          >
+            <h1
+              style="
+                font-size: 2rem;
+                margin-bottom: 15px;
+                color: var(--primary-blue);
+              "
+            >
+              <i class="fas fa-hand-sparkles"></i> اهلا بكم في موقع تنظيمات
+            </h1>
+            <p style="color: var(--text-muted); font-size: 1.1rem">
+              الهدف الاساسي لهذا الموقع هو تنظيم وادارة المحتوي التعليمي بشكل
+              سهل وسريع ومجاني تماما لتسهيل عملية التعلم الممتع لدى الزملاء
+              وتجميع كل ما يخص المواد الدراسية والملاحظات الهامة والاختبارات
+              التدريبية كلها في مكان واحد ليساعد في سرعة الوصول الي المحتوي
+              التعليمي
+            </p>
+          </div>
+
+          <!-- المواد الدراسية -->
+          <div style="margin-bottom: 25px">
+            <h2
+              style="
+                font-size: 1.5rem;
+                color: var(--primary-blue);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+              "
+            >
+              <i class="fas fa-layer-group"></i> المواد الدراسية المقررة
+            </h2>
+            <p style="color: var(--text-muted); margin-top: 8px">
+              بسم الله الرحمان الرحيم
+            </p>
+          </div>
+
+          <section class="quick-grid" id="subjectsGrid">
+            <!-- العروض التعليمية (اختياري) -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              onclick="
+                window.location.href = 'subject.html?sub=edu_presentations'
+              "
+              style="cursor: pointer"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(147, 51, 234, 0.1); color: #9333ea"
+              >
+                <i class="fas fa-presentation"></i>
+              </div>
+              <div class="card-info">
+                <h3>العروض التعليمية (اختياري)</h3>
+                <p>إنشاء وتصميم العروض التقديمية الفعالة</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- مدخل إلى العلوم النفسية -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.1s; cursor: pointer"
+              onclick="window.location.href = 'subject.html?sub=psych_intro'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(236, 72, 153, 0.1); color: #ec4899"
+              >
+                <i class="fas fa-brain"></i>
+              </div>
+              <div class="card-info">
+                <h3>مدخل إلى العلوم النفسية</h3>
+                <p>أساسيات علم النفس والسلوك الإنساني</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- طرق تدريس عامة -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.2s; cursor: pointer"
+              onclick="
+                window.location.href = 'subject.html?sub=teaching_methods'
+              "
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(34, 197, 94, 0.1); color: #22c55e"
+              >
+                <i class="fas fa-chalkboard-teacher"></i>
+              </div>
+              <div class="card-info">
+                <h3>طرق تدريس عامة</h3>
+                <p>استراتيجيات وأساليب التدريس الحديثة</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- نظم تداول المعلومات -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.3s; cursor: pointer"
+              onclick="window.location.href = 'subject.html?sub=info_systems'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(59, 130, 246, 0.1); color: #3b82f6"
+              >
+                <i class="fas fa-network-wired"></i>
+              </div>
+              <div class="card-info">
+                <h3>نظم تداول المعلومات</h3>
+                <p>إدارة وتنظيم المعلومات الرقمية</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- تصميم رسومات ثنائية الأبعاد -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.4s; cursor: pointer"
+              onclick="window.location.href = 'subject.html?sub=2d_graphics'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(245, 158, 11, 0.1); color: #f59e0b"
+              >
+                <i class="fas fa-palette"></i>
+              </div>
+              <div class="card-info">
+                <h3>تصميم رسومات ثنائية الأبعاد</h3>
+                <p>التصميم الجرافيكي والمحتوى البصري</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- البرامج الصوتية -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.5s; cursor: pointer"
+              onclick="window.location.href = 'subject.html?sub=audio_programs'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6"
+              >
+                <i class="fas fa-headphones-alt"></i>
+              </div>
+              <div class="card-info">
+                <h3>البرامج الصوتية</h3>
+                <p>تحرير ومعالجة الملفات الصوتية</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- نظم التشغيل -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.6s; cursor: pointer"
+              onclick="
+                window.location.href = 'subject.html?sub=operating_systems'
+              "
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(16, 185, 129, 0.1); color: #10b981"
+              >
+                <i class="fas fa-server"></i>
+              </div>
+              <div class="card-info">
+                <h3>نظم التشغيل</h3>
+                <p>أساسيات أنظمة التشغيل والإدارة</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- برامج تصميم المحتوى الرقمي -->
+            <div
+              class="stat-card animate__animated animate__fadeInUp"
+              style="animation-delay: 0.7s; cursor: pointer"
+              onclick="window.location.href = 'subject.html?sub=digital_design'"
+            >
+              <div
+                class="card-icon"
+                style="background: rgba(217, 70, 239, 0.1); color: #d946ef"
+              >
+                <i class="fas fa-paint-brush"></i>
+              </div>
+              <div class="card-info">
+                <h3>برامج تصميم المحتوى الرقمي</h3>
+                <p>أدوات التصميم والإنتاج الرقمي</p>
+                <span
+                  class="btn-card"
+                  style="display: inline-block; margin-top: 10px"
+                >
+                  تصفح المادة <i class="fas fa-arrow-left"></i>
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- الوصول السريع -->
+          <div style="margin-top: 50px">
+            <h2
+              style="
+                font-size: 1.5rem;
+                color: var(--primary-blue);
+                margin-bottom: 20px;
+              "
+            >
+              <i class="fas fa-bolt"></i> وصول سريع
+            </h2>
+          </div>
+
+          <div class="quick-grid">
+            <div class="stat-card animate__animated animate__zoomIn">
+              <div
+                class="card-icon"
+                style="background: rgba(59, 130, 246, 0.2); color: #3b82f6"
+              >
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div class="card-info">
+                <h3>جدول المحاضرات</h3>
+                <p>مواعيد المحاضرات والمجموعات</p>
+                <a href="schedule.html" class="btn-card">فتح الجدول</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- الملاحظات والجداول -->
+          <div
+            class="main-grid-container"
+            style="
+              display: grid;
+              grid-template-columns: 1fr;
+              gap: 40px;
+              margin-top: 50px;
+            "
+          >
+            <!-- أهم الملاحظات -->
+            <section
+              id="notesSection"
+              class="content-section animate__animated animate__fadeIn"
+            >
+              <div
+                class="section-header"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+                <i
+                  class="fas fa-bullhorn"
+                  style="color: var(--warning-yellow); font-size: 1.5rem"
+                ></i>
+                <h2 style="font-size: 1.6rem">أهم الملاحظات والتنبيهات</h2>
+              </div>
+              <div class="notes-container" id="notesContainer">
+                <p
+                  style="
+                    color: var(--text-muted);
+                    text-align: center;
+                    padding: 20px;
+                  "
+                >
+                  جاري جلب آخر الملاحظات...
+                </p>
+              </div>
+            </section>
+
+            <!-- الجداول الدراسية -->
+            <section
+              id="scheduleSection"
+              class="content-section animate__animated animate__fadeIn"
+            >
+              <div
+                class="section-header"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  margin-bottom: 20px;
+                "
+              >
+                <i
+                  class="fas fa-calendar-alt"
+                  style="color: #8b5cf6; font-size: 1.5rem"
+                ></i>
+                <h2 style="font-size: 1.6rem">الجداول  </h2>
+              </div>
+              <div class="schedules-grid" id="schedulesContainer">
+                <p
+                  style="
+                    color: var(--text-muted);
+                    text-align: center;
+                    padding: 20px;
+                  "
+                >
+                  جاري تحميل الجداول...
+                </p>
+              </div>
+            </section>
+          </div>
+
+          <!-- أحدث الإضافات -->
+          <section class="recent-updates" style="margin-top: 50px">
+            <div class="section-header">
+              <h2><i class="fas fa-clock"></i> أحدث ما تم رفعه</h2>
+              <a href="library.html" class="view-all"> 
+                
+                - 
+                
+                --</a>
+            </div>
+            <div class="updates-list" id="recentUploads">
+              <div
+                class="loader-container"
+                style="text-align: center; padding: 20px"
+              >
+                <div
+                  class="loader"
+                  style="
+                    width: 30px;
+                    height: 30px;
+                    border-width: 3px;
+                    margin: 0 auto;
+                  "
+                ></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- الفوتر -->
+        <footer class="main-footer">
+          <div class="footer-content">
+            <div class="footer-logo">
+              <i class="fas fa-graduation-cap"></i>
+              <span> </span>
+            </div>
+            <p>
+              هدف الموقع الاساسي سرعة الوصول الي المحتوي وتنظيمة في حال وجود اي
+              اخطاء او ثغرات من اي نوع ارجو الإبلاغ فورا .
+            </p>
+            <div class="social-links">
+              <a href="#">01093383031<i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="copyright">© 2026 - اعداد معاذ احمد علي رياض</p>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+
+    <!-- Smooth Scroll Script -->
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+            const sidebar = document.getElementById("sidebar");
+            if (sidebar && sidebar.classList.contains("active")) {
+              sidebar.classList.remove("active");
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
